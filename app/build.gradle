@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.purevpn"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -22,20 +22,24 @@ android {
     }
 }
 
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.core:core-ktx:1.1.0-alpha04'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+
+
+    //dagger
+
+    annotationProcessor Dependencies.daggerAnnotation
+    annotationProcessor Dependencies.daggerAndroidAnnotation
+
+
+    //testing
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
-    compile 'org.koin:koin-android:1.0.2'
-    // or Koin for Lifecycle scoping
-    compile 'org.koin:koin-android-scope:1.0.2'
-    // or Koin for Android Architecture ViewModel
-    compile 'org.koin:koin-android-viewmodel:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     implementation project(':service')
-    implementation project(':database')
+    implementation project(':core')
+    implementation project(':repository')
+    implementation project(':network')
 }

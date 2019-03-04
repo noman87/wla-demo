@@ -1,4 +1,4 @@
-package com.purevpn.network;
+package com.purevpn.repository;
 
 
 import android.content.Context;
@@ -7,7 +7,7 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.purevpn.network.test", appContext.getPackageName());
+        assertEquals("com.purevpn.databse.test", appContext.getPackageName());
     }
 }

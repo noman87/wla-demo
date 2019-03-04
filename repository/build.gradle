@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 28
@@ -26,6 +26,12 @@ android {
 
 }
 
+ext {
+    roomVersion = '2.1.0-alpha04'
+}
+
+
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':core')
@@ -33,7 +39,4 @@ dependencies {
     testImplementation TestDependencies.junit
     androidTestImplementation TestDependencies.androidxRunner
     androidTestImplementation TestDependencies.espresso
-}
-repositories {
-    mavenCentral()
 }
