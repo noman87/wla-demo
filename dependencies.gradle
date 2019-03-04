@@ -32,8 +32,8 @@ ext {
             appcompat           : "androidx.appcompat:appcompat:${appcompat}",
 
             koinCore            : "org.koin:koin-android:${koinVersion}",
-            koinScope           : "org.koin:koin-androidx-scope:${koinVersion}",
-            koinViewModel       : "org.koin:koin-androidx-viewmodel:${koinVersion}",
+            koinScope           : "org.koin:koin-android-scope:${koinVersion}",
+            koinViewModel       : "org.koin:koin-android-viewmodel:${koinVersion}",
 
             coroutiensCore      : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesCore}",
             coroutiensAndroid   : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesAndroid}",

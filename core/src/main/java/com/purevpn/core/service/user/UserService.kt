@@ -10,5 +10,6 @@ interface UserService {
     suspend fun getAllUsers(): List<UserEntity>
     suspend fun getUserById(id: Int): UserEntity
     fun getUserPublicIp(url:String): Deferred<Response<IpLocationModel>>
+    fun getUserName():String
 
 }

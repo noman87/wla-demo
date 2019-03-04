@@ -3,19 +3,20 @@ package com.purevpn
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
+import com.purevpn.service.users.UserServiceImp
 import com.purevpn.user.UserViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 
 class MainActivity : AppCompatActivity() {
 
 
-    @Inject
-    lateinit var userViewModel: UserViewModel
+
+    private var  userService:UserServiceImp by  inject()
 
     // dispatches execution into Android main thread
     val uiDispatcher: CoroutineDispatcher = Dispatchers.Main
@@ -25,10 +26,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
 
-        CoroutineScope(bgDispatcher).launch {
-            userViewModel.userService.getAllUsers()
-        }
+        val service : UserServiceImp = get()
 
 
     }

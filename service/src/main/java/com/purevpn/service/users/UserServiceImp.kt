@@ -7,10 +7,13 @@ import com.purevpn.core.repository.user.entity.UserEntity
 import com.purevpn.core.service.user.UserService
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
-import javax.inject.Inject
 
 
-class UserServiceImp @Inject constructor(var repository: UserRepository, var userNetwork: UserNetwork) : UserService {
+class UserServiceImp (var repository: UserRepository, var userNetwork: UserNetwork) : UserService {
+    override fun getUserName(): String {
+        return "Noman Noor"
+    }
+
     override fun getUserPublicIp(url:String): Deferred<Response<IpLocationModel>> {
         return userNetwork.getUserPublicIpAsync(url)
     }

@@ -1,8 +1,10 @@
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+
 
 android {
     compileSdkVersion 28
@@ -29,8 +31,8 @@ dependencies {
 
     //dagger
 
-    annotationProcessor Dependencies.daggerAnnotation
-    annotationProcessor Dependencies.daggerAndroidAnnotation
+    kapt Dependencies.daggerAnnotation
+    kapt Dependencies.daggerAndroidAnnotation
 
 
     //testing
