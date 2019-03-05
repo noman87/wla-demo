@@ -5,6 +5,12 @@ import com.purevpn.core.repository.user.UserRepository
 import com.purevpn.core.repository.user.entity.UserEntity
 
 class UserRepositoryImp (var database: ApplicationDatabase) : UserRepository {
+
+
+    override suspend fun insertUser(user: UserEntity) {
+        database.userDao().insert(user)
+    }
+
     override suspend fun getAllUsers(): List<UserEntity> {
         return database.userDao().getAllUsers()
     }

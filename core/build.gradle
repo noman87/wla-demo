@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -62,12 +63,14 @@ dependencies {
 
 
 
+    kapt "android.arch.lifecycle:compiler:1.1.1"
+    kapt "androidx.room:room-compiler:2.1.0-alpha04"
+
 
     //dagger
 
 
-    api Dependencies.dagger
-    api Dependencies.daggerAndroid
+
 
     //testing
     testImplementation TestDependencies.junit

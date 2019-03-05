@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -35,6 +36,9 @@ ext {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':core')
+
+    kapt "android.arch.lifecycle:compiler:1.1.1"
+    kapt "androidx.room:room-compiler:2.1.0-alpha04"
 
     testImplementation TestDependencies.junit
     androidTestImplementation TestDependencies.androidxRunner

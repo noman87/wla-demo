@@ -9,12 +9,16 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Response
 
 
-class UserServiceImp (var repository: UserRepository, var userNetwork: UserNetwork) : UserService {
+class UserServiceImp(var repository: UserRepository, var userNetwork: UserNetwork) : UserService {
+    override suspend fun insertUser(user: UserEntity) {
+        repository.insertUser(user)
+    }
+
     override fun getUserName(): String {
         return "Noman Noor"
     }
 
-    override fun getUserPublicIp(url:String): Deferred<Response<IpLocationModel>> {
+    override fun getUserPublicIp(url: String): Deferred<Response<IpLocationModel>> {
         return userNetwork.getUserPublicIpAsync(url)
     }
 

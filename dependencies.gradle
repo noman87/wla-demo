@@ -16,6 +16,7 @@ ext {
     coroutinesAdapter = '0.9.2'
     androidLifeCycle = '1.1.1'
     daggerVersion = '2.13'
+    koinAndroidArch = '1.0.0-alpha-12'
 
 
     TestDependencies = [
@@ -24,40 +25,41 @@ ext {
             espresso      : "androidx.test.espresso:espresso-core:${espresso}"
     ]
     Dependencies = [
-            kotlin              : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
+            kotlin                 : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
 
 
-            androidxCore        : "androidx.core:core-ktx:${androidxCore}",
-            constraintLayout    : "androidx.constraintlayout:constraintlayout:${constraintLayout}",
-            appcompat           : "androidx.appcompat:appcompat:${appcompat}",
+            androidxCore           : "androidx.core:core-ktx:${androidxCore}",
+            constraintLayout       : "androidx.constraintlayout:constraintlayout:${constraintLayout}",
+            appcompat              : "androidx.appcompat:appcompat:${appcompat}",
 
-            koinCore            : "org.koin:koin-android:${koinVersion}",
-            koinScope           : "org.koin:koin-android-scope:${koinVersion}",
-            koinViewModel       : "org.koin:koin-android-viewmodel:${koinVersion}",
+            koinCore               : "org.koin:koin-android:${koinVersion}",
+            koinScope              : "org.koin:koin-android-scope:${koinVersion}",
+            koinViewModel          : "org.koin:koin-android-viewmodel:${koinVersion}",
 
-            coroutiensCore      : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesCore}",
-            coroutiensAndroid   : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesAndroid}",
-
-            viewModelAndLiveData: "androidx.lifecycle:lifecycle-extensions:${viewModelAndLiveData}",
+            koinAndroidArch        : "org.koin:koin-android-architecture:${koinAndroidArch}",
 
 
+            coroutiensCore         : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesCore}",
+            coroutiensAndroid      : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesAndroid}",
+
+            viewModelAndLiveData   : "androidx.lifecycle:lifecycle-extensions:${viewModelAndLiveData}",
 
 
 
 
-            room                : "androidx.room:room-coroutines:${room}",
-            retrofit            : "com.squareup.retrofit2:retrofit:${retrofit}",
-            moshi               : "com.squareup.retrofit2:converter-moshi:${retrofit}",
-            coroutinesAdapte    : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${coroutinesAdapter}",
+
+
+            room                   : "androidx.room:room-coroutines:${room}",
+            retrofit               : "com.squareup.retrofit2:retrofit:${retrofit}",
+            moshi                  : "com.squareup.retrofit2:converter-moshi:${retrofit}",
+            coroutinesAdapte       : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${coroutinesAdapter}",
 
             //dagger
-            dagger:"com.google.dagger:dagger:${daggerVersion}",
-            daggerAnnotation: "com.google.dagger:dagger-compiler:$daggerVersion",
+            dagger                 : "com.google.dagger:dagger:${daggerVersion}",
+            daggerAnnotation       : "com.google.dagger:dagger-compiler:$daggerVersion",
 
-            daggerAndroid:"com.google.dagger:dagger-android-support:$daggerVersion",
-            daggerAndroidAnnotation : "com.google.dagger:dagger-android-processor:$daggerVersion"
-
-
+            daggerAndroid          : "com.google.dagger:dagger-android-support:$daggerVersion",
+            daggerAndroidAnnotation: "com.google.dagger:dagger-android-processor:$daggerVersion"
 
 
     ]
