@@ -18,8 +18,8 @@ class UserServiceImp(var repository: UserRepository, var userNetwork: UserNetwor
         return "Noman Noor"
     }
 
-    override fun getUserPublicIp(url: String): Deferred<Response<IpLocationModel>> {
-        return userNetwork.getUserPublicIpAsync(url)
+    override fun getUserPublicIp(url: String,params: Map<String, String>): Deferred<Response<IpLocationModel>> {
+        return userNetwork.getUserPublicIpAsync(url,params)
     }
 
     override suspend fun getAllUsers(): List<UserEntity> {

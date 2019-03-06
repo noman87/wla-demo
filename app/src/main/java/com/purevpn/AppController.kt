@@ -56,7 +56,7 @@ class AppController : Application() {
     }
 
     object RetrofitFactory {
-        const val BASE_URL = "https://jsonplaceholder.typicode.com"
+        const val BASE_URL = "https://dialerxn.purevpn.net/dialer/select-location/Dialer_XMLS/"
         fun makeRetrofitService(): NetworkApi {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)

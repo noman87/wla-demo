@@ -8,8 +8,9 @@ import retrofit2.Response
 
 
 class UserNetworkApiImp(private val api: NetworkApi) : UserNetwork {
-    override fun getUserPublicIpAsync(endpoint: String): Deferred<Response<IpLocationModel>> {
-        return api.getIp(endpoint)
+    override fun getUserPublicIpAsync(endpoint: String,params: Map<String, String>): Deferred<Response<IpLocationModel>> {
+
+        return api.getIp(endpoint,params)
     }
 
 }
