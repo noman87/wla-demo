@@ -5,7 +5,7 @@ import android.app.Application
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
-import com.purevpn.core.service.user.UserService
+import com.purevpn.core.service.UserService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +37,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application), K
             val url = "ip_location.php"
             val request = service.getUserPublicIp(url, hashMap)
             val response = request.await()
-            Log.e("Response", response.body()!!.country)
 
 
 

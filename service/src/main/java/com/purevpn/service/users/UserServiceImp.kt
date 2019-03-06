@@ -1,15 +1,15 @@
 package com.purevpn.service.users
 
-import com.purevpn.core.network.user.interfaces.UserNetwork
-import com.purevpn.core.network.user.models.IpLocationModel
+import com.purevpn.core.models.IpLocationModel
+import com.purevpn.core.network.UserNetwork
 import com.purevpn.core.repository.user.UserRepository
 import com.purevpn.core.repository.user.entity.UserEntity
-import com.purevpn.core.service.user.UserService
+import com.purevpn.core.service.UserService
 import kotlinx.coroutines.Deferred
-import retrofit2.Response
 
 
-class UserServiceImp(var repository: UserRepository, var userNetwork: UserNetwork) : UserService {
+class UserServiceImp(var repository: UserRepository, var userNetwork: UserNetwork) :
+    UserService {
     override suspend fun insertUser(user: UserEntity) {
         repository.insertUser(user)
     }
@@ -18,7 +18,7 @@ class UserServiceImp(var repository: UserRepository, var userNetwork: UserNetwor
         return "Noman Noor"
     }
 
-    override fun getUserPublicIp(url: String,params: Map<String, String>): Deferred<Response<IpLocationModel>> {
+    override fun getUserPublicIp(url: String,params: Map<String, String>): Deferred<IpLocationModel> {
         return userNetwork.getUserPublicIpAsync(url,params)
     }
 

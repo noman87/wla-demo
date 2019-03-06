@@ -1,4 +1,4 @@
-package com.purevpn.core.network.user.models
+package com.purevpn.core.models
 
 import com.squareup.moshi.Json
 
@@ -8,7 +8,7 @@ import com.squareup.moshi.Json
  */
 class IpLocationModel(
     @Json(name = "ip")
-    private var ip: String? = null,
+    var ip: String? = null,
     @Json(name = "city")
     var city: String? = null,
     @Json(name = "country")

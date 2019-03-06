@@ -4,13 +4,18 @@ package com.purevpn
 import android.app.Application
 import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.purevpn.core.ApiConverterFactory
 import com.purevpn.core.BusinessService
 import com.purevpn.core.Controller
+import com.purevpn.core.network.Location
 import com.purevpn.core.network.NetworkApi
-import com.purevpn.core.network.user.interfaces.UserNetwork
+import com.purevpn.core.network.UserNetwork
 import com.purevpn.core.repository.user.UserRepository
-import com.purevpn.core.service.user.UserService
+import com.purevpn.core.service.LocationService
+import com.purevpn.core.service.UserService
+import com.purevpn.network.location.LocationImp
 import com.purevpn.network.user.UserNetworkApiImp
+import com.purevpn.service.location.LocationServiceImp
 import com.purevpn.service.users.UserServiceImp
 import com.purevpn.user.UserRepositoryImp
 import org.koin.android.ext.android.startKoin
@@ -28,21 +33,25 @@ class AppController : Application() {
                 .fallbackToDestructiveMigration()
                 .build()
         }
-        single {
-            RetrofitFactory.makeRetrofitService()
-        }
-        single<UserService> {
-            UserServiceImp(get(),get())
-        }
-        single<UserNetwork> {
-            UserNetworkApiImp(get())
-        }
+        single { RetrofitFactory.makeRetrofitService() }
+
+        single<UserService> { UserServiceImp(get(), get()) }
+
+        single<UserNetwork> { UserNetworkApiImp(get()) }
+
         single<UserRepository> { UserRepositoryImp(get()) }
 
         single { get<ApplicationDatabase>().userDao() }
 
         single { Controller(get()) }
+
         single { BusinessService() }
+
+        single<Location> { LocationImp(get()) }
+
+        single<LocationService> { LocationServiceImp(get()) }
+
+
         //viewModel { UserViewModel(get()) }
 
     }
@@ -56,11 +65,11 @@ class AppController : Application() {
     }
 
     object RetrofitFactory {
-        const val BASE_URL = "https://dialerxn.purevpn.net/dialer/select-location/Dialer_XMLS/"
+        const val BASE_URL = "http://api.atom.purevpn.com/"
         fun makeRetrofitService(): NetworkApi {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(ApiConverterFactory(MoshiConverterFactory.create()))
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build().create(NetworkApi::class.java)
         }

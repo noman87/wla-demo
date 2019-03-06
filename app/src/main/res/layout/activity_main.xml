@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="viewmodel"
-            type="com.purevpn.user.UserViewModel" />
+            name="location"
+            type="com.purevpn.location.LocationViewModel" />
 
     </data>
 
@@ -21,37 +21,18 @@
 
 
         <TextView
-            android:id="@+id/user_id"
+            android:id="@+id/ip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@{String.valueOf(viewmodel.id)}" />
-
-
-
-
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewmodel.userName}" />
-
-
-        <Button
-            android:id="@+id/new_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewmodel.onGetUserClick()}"
-            android:text="Get User" />
-
+            android:text="@{location.ip}" />
 
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Call API"
-            android:onClick="@{() -> viewmodel.callApi()}"
-            />
+            android:onClick="@{() -> location.callApi()}" />
 
 
     </LinearLayout>
