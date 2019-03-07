@@ -4,17 +4,14 @@ package com.purevpn
 import android.app.Application
 import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.purevpn.core.ApiConverterFactory
 import com.purevpn.core.BusinessService
 import com.purevpn.core.Controller
 import com.purevpn.core.network.Location
 import com.purevpn.core.network.NetworkApi
-import com.purevpn.core.network.UserNetwork
 import com.purevpn.core.repository.user.UserRepository
 import com.purevpn.core.service.LocationService
 import com.purevpn.core.service.UserService
 import com.purevpn.network.location.LocationImp
-import com.purevpn.network.user.UserNetworkApiImp
 import com.purevpn.service.location.LocationServiceImp
 import com.purevpn.service.users.UserServiceImp
 import com.purevpn.user.UserRepositoryImp
@@ -37,7 +34,6 @@ class AppController : Application() {
 
         single<UserService> { UserServiceImp(get(), get()) }
 
-        single<UserNetwork> { UserNetworkApiImp(get()) }
 
         single<UserRepository> { UserRepositoryImp(get()) }
 
@@ -69,7 +65,7 @@ class AppController : Application() {
         fun makeRetrofitService(): NetworkApi {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(ApiConverterFactory(MoshiConverterFactory.create()))
+                .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build().create(NetworkApi::class.java)
         }
