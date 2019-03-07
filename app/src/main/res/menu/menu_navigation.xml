@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:id="@+id/destination_one"
+        android:title="First destination"/>
+
+    <item android:id="@+id/destination_two"
+        android:title="Second destination"/>
+
+    <item android:id="@+id/destination_three"
+        android:title="Third destination"/>
+</menu>

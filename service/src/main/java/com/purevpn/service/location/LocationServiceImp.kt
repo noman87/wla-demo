@@ -9,6 +9,7 @@ import com.purevpn.service.BaseService
 class LocationServiceImp(private val location: Location) : LocationService, BaseService() {
     override suspend fun getUserIpLocation(): Response<IpLocationModel?> {
         val publicApi = location.getPublicApi()
+
         when (publicApi) {
             is Response.Success -> {
                 publicApi.data

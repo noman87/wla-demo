@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/destination_one">
+
+    <fragment
+        android:id="@+id/destination_one"
+        android:name="com.purevpn.DestinationOneFragment"
+        android:label="fragment_destination_one"
+        tools:layout="@layout/fragment_destination_one" />
+    <fragment
+        android:id="@+id/destination_two"
+        android:name="com.purevpn.DestinationTwoFragment"
+        android:label="fragment_destination_two"
+        tools:layout="@layout/fragment_destination_two" >
+        <action
+            android:id="@+id/action_next"
+            app:destination="@id/destination_three" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_three"
+        android:name="com.purevpn.DestinationThreeFragment"
+        android:label="fragment_destination_three"
+        tools:layout="@layout/fragment_destination_three" >
+        <action
+            android:id="@+id/action_next"
+            app:destination="@id/destination_one" />
+        <argument
+            android:name="user"
+            app:argType="com.purevpn.TestModel" />
+    </fragment>
+</navigation>

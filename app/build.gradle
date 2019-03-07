@@ -5,6 +5,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+
 
 android {
     compileSdkVersion 28
@@ -35,16 +38,24 @@ dependencies {
 
 
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     kapt "android.arch.lifecycle:compiler:1.1.1"
     kapt "androidx.room:room-compiler:2.1.0-alpha04"
-
-
-
 
     //testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+
+
+    def nav_version = "2.0.0-rc02"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version" // For Kotlin use navigation-fragment-ktx
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version" // For Kotlin use navigation-ui-ktx
+
 
     implementation project(':service')
     implementation project(':core')
