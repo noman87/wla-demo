@@ -49,7 +49,9 @@ class AppController : Application() {
         single<LocationNetwork> { LocationNetworkImp(get()) }
 
         single<LocationService> { LocationServiceImp(get()) }
+
         single { NetworkHelper(get()) }
+
         single<BaseNetwork> { BaseNetworkImp(get()) }
 
 

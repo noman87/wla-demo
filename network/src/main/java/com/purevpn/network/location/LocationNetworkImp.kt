@@ -2,18 +2,16 @@ package com.purevpn.network.location
 
 import com.purevpn.core.Response
 import com.purevpn.core.models.IpLocationModel
-import com.purevpn.core.network.BaseNetwork
-import com.purevpn.core.network.Location
+import com.purevpn.core.network.LocationNetwork
+import com.purevpn.core.networkHelper.NetworkHelper
+import com.purevpn.network.BaseNetworkImp
 
-class LocationNetworkImp(private val baseNetwork: BaseNetwork) : Location {
-
+class LocationNetworkImp(networkHelper: NetworkHelper) : BaseNetworkImp(networkHelper), LocationNetwork {
     override suspend fun getPublicApi(): Response<IpLocationModel?> {
-        baseNetwork.apiParams = HashMap()
-        (baseNetwork.apiParams as HashMap<String, String>)["method"] = "json"
-        baseNetwork.apiAccessToken = "FGtbAXMT4QBBLQj97jvP"
-        baseNetwork.apiUrl = "ipmanagement/v1/ip2Location"
-        baseNetwork.apiSuccessCode = 1
-        return baseNetwork.get(IpLocationModel::class.java)
+        apiAccessToken = "FGtbAXMT4QBBLQj97jvP"
+        apiUrl = "ipmanagement/v1/ip2Location"
+        apiSuccessCode = 1
+        return get(IpLocationModel::class.java)
     }
 
 
