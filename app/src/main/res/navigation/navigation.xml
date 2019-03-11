@@ -27,8 +27,5 @@
         <action
             android:id="@+id/action_next"
             app:destination="@id/destination_one" />
-        <argument
-            android:name="user"
-            app:argType="com.purevpn.TestModel" />
     </fragment>
 </navigation>
