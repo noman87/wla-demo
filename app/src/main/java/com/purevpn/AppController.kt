@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.purevpn.core.BusinessService
 import com.purevpn.core.Controller
+import com.purevpn.core.helper.ApiUrls.BASE_URL
 import com.purevpn.core.network.BaseNetwork
 import com.purevpn.core.network.LocationNetwork
 import com.purevpn.core.network.NetworkApi
@@ -69,7 +70,6 @@ class AppController : Application() {
     }
 
     object RetrofitFactory {
-        const val BASE_URL = "http://api.atom.purevpn.com/"
         fun makeRetrofitService(): NetworkApi {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
