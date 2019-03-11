@@ -7,14 +7,14 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.purevpn.core.BusinessService
 import com.purevpn.core.Controller
 import com.purevpn.core.network.BaseNetwork
-import com.purevpn.core.network.Location
+import com.purevpn.core.network.LocationNetwork
 import com.purevpn.core.network.NetworkApi
 import com.purevpn.core.networkHelper.NetworkHelper
 import com.purevpn.core.repository.user.UserRepository
 import com.purevpn.core.service.LocationService
 import com.purevpn.core.service.UserService
 import com.purevpn.network.BaseNetworkImp
-import com.purevpn.network.location.LocationImp
+import com.purevpn.network.location.LocationNetworkImp
 import com.purevpn.service.location.LocationServiceImp
 import com.purevpn.service.users.UserServiceImp
 import com.purevpn.user.UserRepositoryImp
@@ -46,7 +46,7 @@ class AppController : Application() {
 
         single { BusinessService() }
 
-        single<Location> { LocationImp(get()) }
+        single<LocationNetwork> { LocationNetworkImp(get()) }
 
         single<LocationService> { LocationServiceImp(get()) }
         single { NetworkHelper(get()) }
