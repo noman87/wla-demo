@@ -1,21 +1,20 @@
 package com.purevpn.core.models
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 
 /**
  * IpLocationModel
  */
-class IpLocationModel(
-    @Json(name = "ip")
-    var ip: String? = null,
-    @Json(name = "city")
-    var city: String? = null,
-    @Json(name = "country")
-    var country: String? = null,
-    @Json(name = "iso2")
-    var iso2: String? = null,
-    @Json(name = "isp")
+data class IpLocationModel(
+    var ip: String,
+    @SerializedName("city")
+    var city: String,
+    @SerializedName("country")
+    var country: String,
+    @SerializedName("iso2")
+    var iso2: String,
+    @SerializedName("isp")
     var isp: String? = null
 
 )

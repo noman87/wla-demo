@@ -80,6 +80,12 @@ dependencies {
     api Dependencies.retrofit
     api Dependencies.moshi
     api Dependencies.coroutinesAdapte
+
+
+    api 'com.google.code.gson:gson:2.8.5'
+
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+
 }
 repositories {
     mavenCentral()

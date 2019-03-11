@@ -9,11 +9,15 @@ interface BaseNetwork {
     var apiErrorMessage: String
     var apiSuccessCode: Int
     var apiParams: Map<String, String>
-    var apiHttpHeaders:Map<String,String>
-    var apiHttpResponse:String
-    var apiMethod:String
-    var apiHttpResponseCode:Int
+    var apiHttpHeaders: Map<String, String>
+    var apiHttpResponse: String
+    var apiMethod: String
+    var apiHttpResponseCode: Int
+    var apiAccessToken: String
 
+
+
+    suspend fun <T> get(classOfT:Class<T>): Response<T?>
 
 
     suspend fun <T : Any?> safeApiCall(call: suspend () -> Response<T>, errorMessage: String): Response<T> = try {

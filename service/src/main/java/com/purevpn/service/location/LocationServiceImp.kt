@@ -1,5 +1,6 @@
 package com.purevpn.service.location
 
+import android.util.Log
 import com.purevpn.core.Response
 import com.purevpn.core.models.IpLocationModel
 import com.purevpn.core.network.Location
@@ -12,11 +13,11 @@ class LocationServiceImp(private val location: Location) : LocationService, Base
 
         when (publicApi) {
             is Response.Success -> {
-                publicApi.data
+                Log.e("DATA", publicApi.data.toString())
+
             }
             is Response.Error -> {
                 publicApi.exception
-                this.location.apiErrorMessage
             }
         }
         return publicApi

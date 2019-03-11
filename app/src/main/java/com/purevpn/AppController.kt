@@ -6,11 +6,14 @@ import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.purevpn.core.BusinessService
 import com.purevpn.core.Controller
+import com.purevpn.core.network.BaseNetwork
 import com.purevpn.core.network.Location
 import com.purevpn.core.network.NetworkApi
+import com.purevpn.core.networkHelper.NetworkHelper
 import com.purevpn.core.repository.user.UserRepository
 import com.purevpn.core.service.LocationService
 import com.purevpn.core.service.UserService
+import com.purevpn.network.BaseNetworkImp
 import com.purevpn.network.location.LocationImp
 import com.purevpn.service.location.LocationServiceImp
 import com.purevpn.service.users.UserServiceImp
@@ -19,7 +22,7 @@ import org.koin.android.ext.android.startKoin
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class AppController : Application() {
@@ -46,6 +49,9 @@ class AppController : Application() {
         single<Location> { LocationImp(get()) }
 
         single<LocationService> { LocationServiceImp(get()) }
+        single { NetworkHelper(get()) }
+        single<BaseNetwork> { BaseNetworkImp(get()) }
+
 
 
         //viewModel { UserViewModel(get()) }
@@ -65,7 +71,7 @@ class AppController : Application() {
         fun makeRetrofitService(): NetworkApi {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build().create(NetworkApi::class.java)
         }
