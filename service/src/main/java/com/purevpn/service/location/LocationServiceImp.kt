@@ -1,6 +1,5 @@
 package com.purevpn.service.location
 
-import android.util.Log
 import com.purevpn.core.Response
 import com.purevpn.core.models.IpLocationModel
 import com.purevpn.core.network.LocationNetwork
@@ -8,25 +7,23 @@ import com.purevpn.core.service.LocationService
 import com.purevpn.service.BaseService
 
 class LocationServiceImp(private val location: LocationNetwork) : LocationService, BaseService() {
-
     override suspend fun getUserIpLocation(): Response<IpLocationModel?> {
-
         location.apiParams = HashMap()
         location.apiParams["method"] = "json"
         val publicApi = location.getPublicApi()
-
-        when (publicApi) {
+        return when (publicApi) {
             is Response.Success -> {
-                Log.e("DATA", publicApi.data.toString())
+                val ipLocationModel = publicApi.data.body
+                ipLocationModel?.message = publicApi.data.header?.message
 
+                Response.Success(ipLocationModel)
             }
             is Response.Error -> {
-                publicApi.exception
+                Response.Error(Exception("Error"))
             }
         }
-        return publicApi
+
 
     }
-
 
 }

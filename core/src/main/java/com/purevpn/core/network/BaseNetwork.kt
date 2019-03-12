@@ -1,6 +1,7 @@
 package com.purevpn.core.network
 
 import com.purevpn.core.Response
+import com.purevpn.core.models.ApiEnvelope
 import java.io.IOException
 
 interface BaseNetwork {
@@ -17,9 +18,8 @@ interface BaseNetwork {
 
 
 
-    suspend fun <T> get(classOfT:Class<T>): Response<T?>
+    suspend fun <T> get(classOfT:Class<T>): Response<ApiEnvelope<T?>>
 
-    suspend fun <T> post(classOfT:Class<T>): Response<T?>
 
 
     suspend fun <T : Any?> safeApiCall(call: suspend () -> Response<T>, errorMessage: String): Response<T> = try {

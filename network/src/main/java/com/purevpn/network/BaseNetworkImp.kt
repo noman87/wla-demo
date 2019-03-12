@@ -1,17 +1,35 @@
 package com.purevpn.network
 
+import com.purevpn.core.Common
 import com.purevpn.core.Response
+import com.purevpn.core.models.ApiEnvelope
 import com.purevpn.core.network.BaseNetwork
 import com.purevpn.core.networkHelper.NetworkHelper
 
-open class BaseNetworkImp(val networkHelper: NetworkHelper) : BaseNetwork {
+open class BaseNetworkImp(private val networkHelper: NetworkHelper) : BaseNetwork {
 
-    override suspend fun <T> get(classOfT: Class<T>): Response<T?> {
-        return networkHelper.get(this, classOfT)
-    }
+    override suspend fun <T> get(classOfT: Class<T>): Response<ApiEnvelope<T?>> {
+        val httpResponse = networkHelper.get<Any>(apiUrl, apiParams, apiAccessToken)
+        return try {
+            when (httpResponse) {
+                is Response.Success -> {
+                    apiHttpResponse = httpResponse.data?.body().toString()
+                    apiHttpResponseCode = httpResponse.data?.code()!!
+                    val typedResponse = Common.getResponse(httpResponse.data?.body().toString(), classOfT)
+                    if (typedResponse.header?.code == apiSuccessCode) {
+                        Response.Success(typedResponse)
+                    } else {
+                        Response.Error(Exception("Error"))
+                    }
 
-    override suspend fun <T> post(classOfT: Class<T>): Response<T?> {
-        return networkHelper.post(this, classOfT)
+                }
+                is Response.Error -> {
+                    Response.Error(Exception("Error"))
+                }
+            }
+        } catch (e: Exception) {
+            Response.Error(Exception("Error"))
+        }
     }
 
 

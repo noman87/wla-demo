@@ -15,6 +15,7 @@ data class IpLocationModel(
     @SerializedName("iso2")
     var iso2: String,
     @SerializedName("isp")
-    var isp: String? = null
+    var isp: String? = null,
+    var message: String? = null
 
 )
