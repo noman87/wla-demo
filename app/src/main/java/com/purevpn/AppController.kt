@@ -43,18 +43,19 @@ class AppController : Application() {
 
         single { get<ApplicationDatabase>().userDao() }
 
+        single { get<ApplicationDatabase>().locationDao() }
+
         single { Controller(get()) }
 
         single { BusinessService() }
 
         single<LocationNetwork> { LocationNetworkImp(get()) }
 
-        single<LocationService> { LocationServiceImp(get()) }
+        single<LocationService> { LocationServiceImp(get(), get()) }
 
         single { NetworkHelper(get()) }
 
         single<BaseNetwork> { BaseNetworkImp(get()) }
-
 
 
         //viewModel { UserViewModel(get()) }

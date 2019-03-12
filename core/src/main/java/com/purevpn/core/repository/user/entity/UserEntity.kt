@@ -7,5 +7,4 @@ import androidx.room.PrimaryKey
  class UserEntity(
     @field:PrimaryKey
     var id:Int,
-    var name:String) {
-}
+    var name:String)
