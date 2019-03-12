@@ -11,14 +11,12 @@ import com.purevpn.core.network.BaseNetwork
 import com.purevpn.core.network.LocationNetwork
 import com.purevpn.core.network.NetworkApi
 import com.purevpn.core.networkHelper.NetworkHelper
-import com.purevpn.core.repository.user.UserRepository
+import com.purevpn.core.repository.LocationRepository
 import com.purevpn.core.service.LocationService
-import com.purevpn.core.service.UserService
+import com.purevpn.location.LocationRepositoryImp
 import com.purevpn.network.BaseNetworkImp
 import com.purevpn.network.location.LocationNetworkImp
 import com.purevpn.service.location.LocationServiceImp
-import com.purevpn.service.users.UserServiceImp
-import com.purevpn.user.UserRepositoryImp
 import org.koin.android.ext.android.startKoin
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module.module
@@ -36,12 +34,6 @@ class AppController : Application() {
         }
         single { RetrofitFactory.makeRetrofitService() }
 
-        single<UserService> { UserServiceImp(get(), get()) }
-
-
-        single<UserRepository> { UserRepositoryImp(get()) }
-
-        single { get<ApplicationDatabase>().userDao() }
 
         single { get<ApplicationDatabase>().locationDao() }
 
@@ -57,8 +49,8 @@ class AppController : Application() {
 
         single<BaseNetwork> { BaseNetworkImp(get()) }
 
-
-        //viewModel { UserViewModel(get()) }
+        single { RepositoryHelper(get()) }
+        single<LocationRepository> { LocationRepositoryImp(get()) }
 
     }
 

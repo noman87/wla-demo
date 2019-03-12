@@ -7,10 +7,10 @@ import com.google.gson.annotations.SerializedName
 
 
 /**
- * IpLocationModel
+ * LocationModel
  */
 @Entity(tableName = "tbl_location")
-data class IpLocationModel(
+data class LocationModel(
     @field:PrimaryKey
     var id: Int,
 

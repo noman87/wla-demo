@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.purevpn.core.Response
-import com.purevpn.core.models.IpLocationModel
+import com.purevpn.core.models.LocationModel
 import com.purevpn.core.service.LocationService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +17,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
 
     private val locationService: LocationService by inject()
 
-    var locaiton = ObservableField<IpLocationModel>()
+    var locaiton = ObservableField<LocationModel>()
 
     var ip = ObservableField<String>()
     val uiDispatcher: CoroutineDispatcher = Dispatchers.Main
@@ -28,7 +28,9 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         CoroutineScope(bgDispatcher).launch {
             val userIpLocation = locationService.getUserIpLocation()
             when (userIpLocation) {
-                is Response.Success -> userIpLocation.data
+                is Response.Success -> {
+                    userIpLocation.data
+                }
                 is Response.Error -> userIpLocation.exception.toString()
             }
         }

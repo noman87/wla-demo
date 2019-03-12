@@ -1,11 +1,13 @@
 package com.purevpn.location
 
-import com.purevpn.ApplicationDatabase
-import com.purevpn.core.models.IpLocationModel
-import com.purevpn.core.repository.user.dao.IpLocationDao
+import com.purevpn.RepositoryHelper
+import com.purevpn.core.models.LocationModel
+import com.purevpn.core.repository.LocationRepository
 
-class LocationRepositoryImp(val database:ApplicationDatabase):IpLocationDao {
-    override suspend fun insertLocation(vararg location: IpLocationModel) {
-        database.locationDao().insertLocation(*location)
+class LocationRepositoryImp(private val repositoryHelper: RepositoryHelper) : LocationRepository {
+
+    override suspend fun insertLocation(location: LocationModel) {
+        repositoryHelper.insertLocation(location)
     }
+
 }

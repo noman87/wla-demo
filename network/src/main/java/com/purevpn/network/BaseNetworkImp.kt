@@ -1,6 +1,5 @@
 package com.purevpn.network
 
-import com.purevpn.core.Common
 import com.purevpn.core.Response
 import com.purevpn.core.models.ApiEnvelope
 import com.purevpn.core.network.BaseNetwork
@@ -13,15 +12,7 @@ open class BaseNetworkImp(private val networkHelper: NetworkHelper) : BaseNetwor
         return try {
             when (httpResponse) {
                 is Response.Success -> {
-                    apiHttpResponse = httpResponse.data?.body().toString()
-                    apiHttpResponseCode = httpResponse.data?.code()!!
-                    val typedResponse = Common.getResponse(httpResponse.data?.body().toString(), classOfT)
-                    if (typedResponse.header?.code == apiSuccessCode) {
-                        Response.Success(typedResponse)
-                    } else {
-                        Response.Error(Exception("Error"))
-                    }
-
+                    NetworkExtension.get(this, httpResponse.data, classOfT)
                 }
                 is Response.Error -> {
                     Response.Error(Exception("Error"))
