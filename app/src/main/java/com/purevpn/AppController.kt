@@ -10,7 +10,7 @@ import com.purevpn.core.helper.ApiUrls.BASE_URL
 import com.purevpn.core.network.BaseNetwork
 import com.purevpn.core.network.LocationNetwork
 import com.purevpn.core.network.NetworkApi
-import com.purevpn.core.networkHelper.NetworkHelper
+import com.purevpn.core.networkHelper.WebRequestHelper
 import com.purevpn.core.repository.LocationRepository
 import com.purevpn.core.service.LocationService
 import com.purevpn.location.LocationRepositoryImp
@@ -44,7 +44,7 @@ class AppController : Application() {
 
         single<LocationService> { LocationServiceImp(get(), get()) }
 
-        single { NetworkHelper(get()) }
+        single { WebRequestHelper(get()) }
 
         single<BaseNetwork> { BaseNetworkImp(get()) }
 

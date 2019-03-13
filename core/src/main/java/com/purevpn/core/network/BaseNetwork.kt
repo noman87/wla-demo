@@ -17,8 +17,7 @@ interface BaseNetwork {
     var apiAccessToken: String
 
 
-
-    suspend fun <T> get(classOfT:Class<T>): Result<ApiEnvelope<T?>>
+    suspend fun <T> get(url: String, params: HashMap<String, String>,headers:HashMap<String,String>, classOfT: Class<T>): Result<ApiEnvelope<T?>>
 
 
 

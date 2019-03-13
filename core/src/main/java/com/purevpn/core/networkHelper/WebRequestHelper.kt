@@ -5,10 +5,10 @@ import com.purevpn.core.network.NetworkApi
 import okhttp3.ResponseBody
 import retrofit2.Response
 
-class NetworkHelper(var networkApi: NetworkApi) {
+class WebRequestHelper(var networkApi: NetworkApi) {
 
     suspend fun <T> get(
-        url: String,params: HashMap<String, String>, header: String): Result<Response<ResponseBody>> {
+        url: String,params: HashMap<String, String>, header: HashMap<String,String>): Result<Response<ResponseBody>> {
         return try {
             val apiResponse = networkApi.callGetRequest(url, params, header).await()
             Result.Success(apiResponse)

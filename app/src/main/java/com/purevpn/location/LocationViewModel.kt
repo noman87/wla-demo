@@ -26,7 +26,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
 
     fun callApi() {
         CoroutineScope(bgDispatcher).launch {
-            val userIpLocation = locationService.getUserIpLocation()
+            val userIpLocation = locationService.getLocation()
             when (userIpLocation) {
                 is Result.Success -> {
                     userIpLocation.data.run {
@@ -34,7 +34,9 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                     }
 
                 }
-                is Result.Error -> userIpLocation.exception.toString()
+                is Result.Error -> {
+                    userIpLocation.exception.toString()
+                }
             }
         }
     }

@@ -3,19 +3,29 @@ package com.purevpn.network.location
 import com.purevpn.core.Result
 import com.purevpn.core.helper.ApiUrls
 import com.purevpn.core.helper.Constants
-import com.purevpn.core.models.ApiEnvelope
 import com.purevpn.core.models.LocationModel
 import com.purevpn.core.network.LocationNetwork
-import com.purevpn.core.networkHelper.NetworkHelper
+import com.purevpn.core.networkHelper.WebRequestHelper
 import com.purevpn.network.BaseNetworkImp
 
-class LocationNetworkImp(networkHelper: NetworkHelper) : BaseNetworkImp(networkHelper), LocationNetwork {
-    override suspend fun getPublicApi(): Result<ApiEnvelope<LocationModel?>> {
-        apiAccessToken = Constants.API_ACCESS_TOKEN
-        apiUrl = ApiUrls.URL_IP_2_LOCATION
-        apiSuccessCode = 1
+class LocationNetworkImp(webRequestHelper: WebRequestHelper) : BaseNetworkImp(webRequestHelper), LocationNetwork {
 
-        return get(LocationModel::class.java)
+    override suspend fun getLocation(map: HashMap<String, String>): Result<LocationModel?> {
+        val headers = HashMap<String, String>()
+        headers.put("X-Psk", Constants.API_ACCESS_TOKEN)
+        apiSuccessCode = 1
+        val response = get(ApiUrls.URL_IP_2_LOCATION, map, headers, LocationModel::class.java)
+        return when (response) {
+            is Result.Success -> {
+                val responseBody = response.data.body
+                responseBody?.message = response.data.header?.message
+                Result.Success(responseBody)
+            }
+            is Result.Error -> {
+
+                Result.Error(Exception("Error"))
+            }
+        }
     }
 
 

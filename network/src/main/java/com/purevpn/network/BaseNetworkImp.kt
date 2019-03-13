@@ -1,23 +1,23 @@
 package com.purevpn.network
 
-import com.google.gson.JsonObject
 import com.purevpn.core.Common
 import com.purevpn.core.Result
 import com.purevpn.core.models.ApiEnvelope
 import com.purevpn.core.network.BaseNetwork
-import com.purevpn.core.networkHelper.NetworkHelper
+import com.purevpn.core.networkHelper.WebRequestHelper
 import okhttp3.ResponseBody
 import retrofit2.Response
 
-open class BaseNetworkImp(private val networkHelper: NetworkHelper) : BaseNetwork {
+open class BaseNetworkImp(private val webRequestHelper: WebRequestHelper) : BaseNetwork {
 
-    override suspend fun <T> get(classOfT: Class<T>): Result<ApiEnvelope<T?>> {
-        val httpResponse = networkHelper.get<Any>(apiUrl, apiParams, apiAccessToken)
+    override suspend fun <T> get(url: String, params: HashMap<String, String>, headers: HashMap<String, String>, classOfT: Class<T>): Result<ApiEnvelope<T?>> {
+        setProperties(url, params, headers)
+        val httpResponse = webRequestHelper.get<Any>(apiUrl, apiParams, apiHttpHeaders)
         try {
             when (httpResponse) {
                 is Result.Success -> {
                     httpResponse.data.apply {
-                        //setApiProperties(this)
+                        setHttpApiProperties(this)
                         return getTypedResponse(this, classOfT)
                     }
                 }
@@ -28,16 +28,24 @@ open class BaseNetworkImp(private val networkHelper: NetworkHelper) : BaseNetwor
         }
     }
 
-    private fun setApiProperties(httpResponse: Response<JsonObject>?) {
+    private fun setHttpApiProperties(httpResponse: Response<ResponseBody>?) {
         httpResponse?.apply {
             apiHttpResponse = body()?.toString().orEmpty()
             apiHttpResponseCode = code()
             apiErrorMessage = errorBody()?.string().orEmpty()
-            sendEvent()
+            trackApi(httpResponse.raw())
         }
     }
 
-    private fun sendEvent() {
+    private fun trackApi(rawResponse: okhttp3.Response) {
+
+    }
+
+
+    private fun setProperties(url: String, params: HashMap<String, String>, headers: HashMap<String, String>) {
+        apiUrl = url
+        apiParams = params
+        apiHttpHeaders = headers
 
     }
 

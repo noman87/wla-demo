@@ -4,5 +4,5 @@ import com.purevpn.core.Result
 import com.purevpn.core.models.LocationModel
 
 interface LocationService {
-    suspend fun getUserIpLocation(): Result<LocationModel?>
+    suspend fun getLocation(): Result<LocationModel?>
 }
