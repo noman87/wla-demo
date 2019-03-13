@@ -3,7 +3,7 @@ package com.purevpn.location
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
-import com.purevpn.core.Response
+import com.purevpn.core.Result
 import com.purevpn.core.models.LocationModel
 import com.purevpn.core.service.LocationService
 import kotlinx.coroutines.CoroutineDispatcher
@@ -28,10 +28,13 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         CoroutineScope(bgDispatcher).launch {
             val userIpLocation = locationService.getUserIpLocation()
             when (userIpLocation) {
-                is Response.Success -> {
-                    userIpLocation.data
+                is Result.Success -> {
+                    userIpLocation.data.run {
+
+                    }
+
                 }
-                is Response.Error -> userIpLocation.exception.toString()
+                is Result.Error -> userIpLocation.exception.toString()
             }
         }
     }

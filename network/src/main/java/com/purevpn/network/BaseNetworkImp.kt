@@ -1,25 +1,25 @@
 package com.purevpn.network
 
-import com.purevpn.core.Response
+import com.purevpn.core.Result
 import com.purevpn.core.models.ApiEnvelope
 import com.purevpn.core.network.BaseNetwork
 import com.purevpn.core.networkHelper.NetworkHelper
 
 open class BaseNetworkImp(private val networkHelper: NetworkHelper) : BaseNetwork {
 
-    override suspend fun <T> get(classOfT: Class<T>): Response<ApiEnvelope<T?>> {
+    override suspend fun <T> get(classOfT: Class<T>): Result<ApiEnvelope<T?>> {
         val httpResponse = networkHelper.get<Any>(apiUrl, apiParams, apiAccessToken)
         return try {
             when (httpResponse) {
-                is Response.Success -> {
+                is Result.Success -> {
                     NetworkExtension.get(this, httpResponse.data, classOfT)
                 }
-                is Response.Error -> {
-                    Response.Error(Exception("Error"))
+                is Result.Error -> {
+                    Result.Error(Exception("Error"))
                 }
             }
         } catch (e: Exception) {
-            Response.Error(Exception("Error"))
+            Result.Error(Exception("Error"))
         }
     }
 
