@@ -21,7 +21,6 @@ import org.koin.android.ext.android.startKoin
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class AppController : Application() {
@@ -66,7 +65,6 @@ class AppController : Application() {
         fun makeRetrofitService(): NetworkApi {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build().create(NetworkApi::class.java)
         }
