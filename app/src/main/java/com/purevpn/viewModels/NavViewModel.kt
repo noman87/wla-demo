@@ -1,4 +1,4 @@
-package com.purevpn
+package com.purevpn.viewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

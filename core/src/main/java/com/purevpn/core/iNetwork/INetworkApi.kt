@@ -1,4 +1,4 @@
-package com.purevpn.core.network
+package com.purevpn.core.iNetwork
 
 import kotlinx.coroutines.Deferred
 import okhttp3.ResponseBody

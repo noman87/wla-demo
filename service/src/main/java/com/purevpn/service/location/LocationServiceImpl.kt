@@ -1,18 +1,18 @@
 package com.purevpn.service.location
 
-import com.purevpn.core.Result
 import com.purevpn.core.databseDao.LocationDao
+import com.purevpn.core.iNetwork.ILocationNetwork
+import com.purevpn.core.iService.ILocationService
 import com.purevpn.core.models.LocationModel
-import com.purevpn.core.network.ILocationNetwork
-import com.purevpn.core.service.ILocationService
+import com.purevpn.core.models.Result
 
-class LocationServiceImpl(private val locationRepo: LocationDao, private val iLocationNetwork: ILocationNetwork) :
+class LocationServiceImpl(private val locationRepo: LocationDao, private val locationNetwork: ILocationNetwork) :
     ILocationService {
 
     override suspend fun getLocation(): Result<LocationModel?> {
-        val map = HashMap<String, String>()
-        map["method"] = "json"
-        val publicApi = iLocationNetwork.getLocation(map)
+        val params = HashMap<String, String>()
+        params["method"] = "json"
+        val publicApi = locationNetwork.getLocation(params)
         return when (publicApi) {
             is Result.Success -> {
                 val ipLocationModel = publicApi.data

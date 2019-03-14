@@ -1,7 +1,7 @@
-package com.purevpn.core.network
+package com.purevpn.core.iNetwork
 
-import com.purevpn.core.Result
 import com.purevpn.core.models.ApiEnvelope
+import com.purevpn.core.models.Result
 import java.io.IOException
 
 interface IBaseNetwork {

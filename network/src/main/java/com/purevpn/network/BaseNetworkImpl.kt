@@ -1,16 +1,16 @@
 package com.purevpn.network
 
-import com.purevpn.core.Common
-import com.purevpn.core.Result
+import com.purevpn.core.helper.Utilities
+import com.purevpn.core.helper.WebRequestHelper
+import com.purevpn.core.iNetwork.IBaseNetwork
 import com.purevpn.core.models.ApiEnvelope
-import com.purevpn.core.network.IBaseNetwork
-import com.purevpn.core.networkHelper.WebRequestHelper
+import com.purevpn.core.models.Result
 import okhttp3.ResponseBody
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import retrofit2.Response
 
-open class IBaseNetworkImpl : IBaseNetwork, KoinComponent {
+open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
     private val webRequestHelper: WebRequestHelper by inject()
     override suspend fun <T> get(
         url: String,
@@ -57,7 +57,7 @@ open class IBaseNetworkImpl : IBaseNetwork, KoinComponent {
     }
 
     private fun <T> getTypedResponse(response: Response<ResponseBody>, classOfT: Class<T>): Result<ApiEnvelope<T?>> {
-        val typedResponse = Common.getResponse(response.body()?.string().orEmpty(), classOfT)
+        val typedResponse = Utilities.getResponse(response.body()?.string().orEmpty(), classOfT)
         return if (typedResponse.header != null && typedResponse.header?.code == apiSuccessCode) {
             Result.Success(typedResponse)
         } else {

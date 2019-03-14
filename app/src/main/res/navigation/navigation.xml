@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/destination_one"
-        android:name="com.purevpn.DestinationOneFragment"
+        android:name="com.purevpn.fragments.DestinationOneFragment"
         android:label="fragment_destination_one"
         tools:layout="@layout/fragment_destination_one" />
     <fragment
         android:id="@+id/destination_two"
-        android:name="com.purevpn.DestinationTwoFragment"
+        android:name="com.purevpn.fragments.DestinationTwoFragment"
         android:label="fragment_destination_two"
         tools:layout="@layout/fragment_destination_two" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/destination_three"
-        android:name="com.purevpn.DestinationThreeFragment"
+        android:name="com.purevpn.fragments.DestinationThreeFragment"
         android:label="fragment_destination_three"
         tools:layout="@layout/fragment_destination_three" >
         <action

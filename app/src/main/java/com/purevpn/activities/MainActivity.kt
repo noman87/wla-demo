@@ -1,11 +1,12 @@
-package com.purevpn
+package com.purevpn.activities
 
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
-import com.purevpn.location.LocationViewModel
+import com.purevpn.R
+import com.purevpn.viewModels.LocationViewModel
 
 
 class MainActivity : AppCompatActivity() {

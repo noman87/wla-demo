@@ -7,7 +7,7 @@
 
         <variable
             name="location"
-            type="com.purevpn.location.LocationViewModel" />
+            type="com.purevpn.viewModels.LocationViewModel" />
 
     </data>
 
@@ -17,7 +17,7 @@
         android:orientation="vertical"
         android:padding="8dp"
         android:gravity="center"
-        tools:context=".MainActivity">
+        tools:context=".activities.MainActivity">
 
 
 

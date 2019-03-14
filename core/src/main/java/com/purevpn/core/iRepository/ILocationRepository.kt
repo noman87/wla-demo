@@ -1,4 +1,4 @@
-package com.purevpn.core.repository
+package com.purevpn.core.iRepository
 
 import com.purevpn.core.models.LocationModel
 

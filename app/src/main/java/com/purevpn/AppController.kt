@@ -5,15 +5,14 @@ import android.app.Application
 import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.purevpn.core.helper.ApiUrls.BASE_URL
-import com.purevpn.core.network.IBaseNetwork
-import com.purevpn.core.network.ILocationNetwork
-import com.purevpn.core.network.INetworkApi
-import com.purevpn.core.networkHelper.WebRequestHelper
-import com.purevpn.core.repository.ILocationRepository
-import com.purevpn.core.service.ILocationService
-import com.purevpn.location.ILocationRepositoryImp
-import com.purevpn.network.IBaseNetworkImpl
-import com.purevpn.network.location.LocationNetworkImpl
+import com.purevpn.core.helper.WebRequestHelper
+import com.purevpn.core.iNetwork.IBaseNetwork
+import com.purevpn.core.iNetwork.ILocationNetwork
+import com.purevpn.core.iNetwork.INetworkApi
+import com.purevpn.core.iRepository.ILocationRepository
+import com.purevpn.core.iService.ILocationService
+import com.purevpn.network.BaseNetworkImpl
+import com.purevpn.network.LocationNetworkImpl
 import com.purevpn.service.location.LocationServiceImpl
 import org.koin.android.ext.android.startKoin
 import org.koin.android.ext.koin.androidApplication
@@ -41,10 +40,10 @@ class AppController : Application() {
 
         single { WebRequestHelper() }
 
-        single<IBaseNetwork> { IBaseNetworkImpl() }
+        single<IBaseNetwork> { BaseNetworkImpl() }
 
         single { RepositoryHelper(get()) }
-        single<ILocationRepository> { ILocationRepositoryImp(get()) }
+        single<ILocationRepository> { LocationRepositoryImpl(get()) }
 
     }
 
