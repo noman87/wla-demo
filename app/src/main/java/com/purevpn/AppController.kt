@@ -34,9 +34,9 @@ class AppController : Application() {
         single { get<ApplicationDatabase>().locationDao() }
 
 
-        factory<ILocationNetwork> { LocationNetworkImpl() }
+        single<ILocationNetwork> { LocationNetworkImpl() }
 
-        factory<ILocationService> { LocationServiceImpl(get(), get()) }
+        single<ILocationService> { LocationServiceImpl(get(), get()) }
 
         single { WebRequestHelper() }
 

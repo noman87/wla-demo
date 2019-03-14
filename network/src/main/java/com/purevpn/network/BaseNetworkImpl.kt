@@ -25,6 +25,7 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
                 is Result.Success -> {
                     httpResponse.data.apply {
                         setHttpApiProperties(this)
+                        trackApi(this)
                         return getTypedResponse(this, classOfT)
                     }
                 }
@@ -35,17 +36,16 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
         }
     }
 
+    private fun trackApi(response: Response<ResponseBody>) {
+
+    }
+
     private fun setHttpApiProperties(httpResponse: Response<ResponseBody>?) {
         httpResponse?.apply {
             apiHttpResponse = body()?.toString().orEmpty()
             apiHttpResponseCode = code()
             apiErrorMessage = errorBody()?.string().orEmpty()
-            trackApi(httpResponse.raw())
         }
-    }
-
-    private fun trackApi(rawResponse: okhttp3.Response) {
-
     }
 
 
@@ -66,8 +66,6 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
 
     }
 
-
-    override lateinit var apiAccessToken: String
     override lateinit var apiHttpHeaders: HashMap<String, String>
     override lateinit var apiHttpResponse: String
     override lateinit var apiMethod: String
@@ -75,7 +73,7 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
     override lateinit var apiUrl: String
     override lateinit var apiEndPoint: String
     override lateinit var apiErrorMessage: String
-    override var apiSuccessCode: Int = 0
+    override val apiSuccessCode: Int = 0
     override lateinit var apiParams: HashMap<String, String>
 
 

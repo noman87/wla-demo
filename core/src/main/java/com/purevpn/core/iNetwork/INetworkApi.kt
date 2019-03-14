@@ -13,9 +13,7 @@ interface INetworkApi {
 
     @GET
     fun callGetRequest(
-        @Url url: String,
-        @QueryMap params: Map<String, String>,
-        @HeaderMap headers: HashMap<String, String>
+        @Url url: String, @QueryMap params: Map<String, String>, @HeaderMap headers: HashMap<String, String>
     ): Deferred<Response<ResponseBody>>
 
 
