@@ -19,7 +19,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
 
     var locaiton = ObservableField<LocationModel>()
 
-    var ip = ObservableField<String>()
+    var observableIpField = ObservableField<String>()
     val uiDispatcher: CoroutineDispatcher = Dispatchers.Main
     val bgDispatcher: CoroutineDispatcher = Dispatchers.IO
 
@@ -29,8 +29,8 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
             val userIpLocation = ILocationService.getLocation()
             when (userIpLocation) {
                 is Result.Success -> {
-                    userIpLocation.data.run {
-
+                    userIpLocation.data?.run {
+                        observableIpField.set(ip)
                     }
 
                 }

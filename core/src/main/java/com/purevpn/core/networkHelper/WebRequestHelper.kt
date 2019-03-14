@@ -3,9 +3,13 @@ package com.purevpn.core.networkHelper
 import com.purevpn.core.Result
 import com.purevpn.core.network.INetworkApi
 import okhttp3.ResponseBody
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import retrofit2.Response
 
-class WebRequestHelper(var INetworkApi: INetworkApi) {
+class WebRequestHelper: KoinComponent {
+
+    private val INetworkApi: INetworkApi by inject()
 
     suspend fun <T> get(
         url: String,params: HashMap<String, String>, header: HashMap<String,String>): Result<Response<ResponseBody>> {

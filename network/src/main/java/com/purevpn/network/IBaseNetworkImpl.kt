@@ -6,11 +6,18 @@ import com.purevpn.core.models.ApiEnvelope
 import com.purevpn.core.network.IBaseNetwork
 import com.purevpn.core.networkHelper.WebRequestHelper
 import okhttp3.ResponseBody
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import retrofit2.Response
 
-open class IBaseNetworkImp(private val webRequestHelper: WebRequestHelper) : IBaseNetwork {
-
-    override suspend fun <T> get(url: String, params: HashMap<String, String>, headers: HashMap<String, String>, classOfT: Class<T>): Result<ApiEnvelope<T?>> {
+open class IBaseNetworkImpl : IBaseNetwork, KoinComponent {
+    private val webRequestHelper: WebRequestHelper by inject()
+    override suspend fun <T> get(
+        url: String,
+        params: HashMap<String, String>,
+        headers: HashMap<String, String>,
+        classOfT: Class<T>
+    ): Result<ApiEnvelope<T?>> {
         setProperties(url, params, headers)
         val httpResponse = webRequestHelper.get<Any>(apiUrl, apiParams, apiHttpHeaders)
         try {

@@ -5,10 +5,9 @@ import com.purevpn.core.helper.ApiUrls
 import com.purevpn.core.helper.Constants
 import com.purevpn.core.models.LocationModel
 import com.purevpn.core.network.ILocationNetwork
-import com.purevpn.core.networkHelper.WebRequestHelper
-import com.purevpn.network.IBaseNetworkImp
+import com.purevpn.network.IBaseNetworkImpl
 
-class LocationNetworkImpl(webRequestHelper: WebRequestHelper) : IBaseNetworkImp(webRequestHelper), ILocationNetwork {
+class LocationNetworkImpl : IBaseNetworkImpl(), ILocationNetwork {
 
     override suspend fun getLocation(map: HashMap<String, String>): Result<LocationModel?> {
         val headers = HashMap<String, String>()
