@@ -2,9 +2,9 @@ package com.purevpn.location
 
 import com.purevpn.RepositoryHelper
 import com.purevpn.core.models.LocationModel
-import com.purevpn.core.repository.LocationRepository
+import com.purevpn.core.repository.ILocationRepository
 
-class LocationRepositoryImp(private val repositoryHelper: RepositoryHelper) : LocationRepository {
+class ILocationRepositoryImp(private val repositoryHelper: RepositoryHelper) : ILocationRepository {
 
     override suspend fun insertLocation(location: LocationModel) {
         repositoryHelper.insertLocation(location)

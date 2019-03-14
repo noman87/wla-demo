@@ -4,7 +4,7 @@ import com.purevpn.core.Result
 import com.purevpn.core.models.ApiEnvelope
 import java.io.IOException
 
-interface BaseNetwork {
+interface IBaseNetwork {
     var apiUrl: String
     var apiEndPoint: String
     var apiErrorMessage: String

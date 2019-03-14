@@ -8,7 +8,7 @@ import retrofit2.http.HeaderMap
 import retrofit2.http.QueryMap
 import retrofit2.http.Url
 
-interface NetworkApi {
+interface INetworkApi {
 
 
     @GET

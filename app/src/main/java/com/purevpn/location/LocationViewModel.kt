@@ -5,7 +5,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.purevpn.core.Result
 import com.purevpn.core.models.LocationModel
-import com.purevpn.core.service.LocationService
+import com.purevpn.core.service.ILocationService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +15,7 @@ import org.koin.standalone.inject
 
 class LocationViewModel(application: Application) : AndroidViewModel(application), KoinComponent {
 
-    private val locationService: LocationService by inject()
+    private val ILocationService: ILocationService by inject()
 
     var locaiton = ObservableField<LocationModel>()
 
@@ -26,7 +26,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
 
     fun callApi() {
         CoroutineScope(bgDispatcher).launch {
-            val userIpLocation = locationService.getLocation()
+            val userIpLocation = ILocationService.getLocation()
             when (userIpLocation) {
                 is Result.Success -> {
                     userIpLocation.data.run {

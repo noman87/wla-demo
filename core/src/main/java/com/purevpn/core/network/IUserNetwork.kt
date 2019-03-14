@@ -1,5 +1,5 @@
 package com.purevpn.core.network
 
-interface UserNetwork {
+interface IUserNetwork {
 
 }

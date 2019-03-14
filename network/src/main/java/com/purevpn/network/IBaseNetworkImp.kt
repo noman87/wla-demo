@@ -3,12 +3,12 @@ package com.purevpn.network
 import com.purevpn.core.Common
 import com.purevpn.core.Result
 import com.purevpn.core.models.ApiEnvelope
-import com.purevpn.core.network.BaseNetwork
+import com.purevpn.core.network.IBaseNetwork
 import com.purevpn.core.networkHelper.WebRequestHelper
 import okhttp3.ResponseBody
 import retrofit2.Response
 
-open class BaseNetworkImp(private val webRequestHelper: WebRequestHelper) : BaseNetwork {
+open class IBaseNetworkImp(private val webRequestHelper: WebRequestHelper) : IBaseNetwork {
 
     override suspend fun <T> get(url: String, params: HashMap<String, String>, headers: HashMap<String, String>, classOfT: Class<T>): Result<ApiEnvelope<T?>> {
         setProperties(url, params, headers)

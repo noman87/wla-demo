@@ -7,16 +7,16 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.purevpn.core.BusinessService
 import com.purevpn.core.Controller
 import com.purevpn.core.helper.ApiUrls.BASE_URL
-import com.purevpn.core.network.BaseNetwork
-import com.purevpn.core.network.LocationNetwork
-import com.purevpn.core.network.NetworkApi
+import com.purevpn.core.network.IBaseNetwork
+import com.purevpn.core.network.ILocationNetwork
+import com.purevpn.core.network.INetworkApi
 import com.purevpn.core.networkHelper.WebRequestHelper
-import com.purevpn.core.repository.LocationRepository
-import com.purevpn.core.service.LocationService
-import com.purevpn.location.LocationRepositoryImp
-import com.purevpn.network.BaseNetworkImp
-import com.purevpn.network.location.LocationNetworkImp
-import com.purevpn.service.location.LocationServiceImp
+import com.purevpn.core.repository.ILocationRepository
+import com.purevpn.core.service.ILocationService
+import com.purevpn.location.ILocationRepositoryImp
+import com.purevpn.network.IBaseNetworkImp
+import com.purevpn.network.location.LocationNetworkImpl
+import com.purevpn.service.location.LocationServiceImpl
 import org.koin.android.ext.android.startKoin
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module.module
@@ -40,16 +40,16 @@ class AppController : Application() {
 
         single { BusinessService() }
 
-        single<LocationNetwork> { LocationNetworkImp(get()) }
+        single<ILocationNetwork> { LocationNetworkImpl(get()) }
 
-        single<LocationService> { LocationServiceImp(get(), get()) }
+        single<ILocationService> { LocationServiceImpl(get(), get()) }
 
         single { WebRequestHelper(get()) }
 
-        single<BaseNetwork> { BaseNetworkImp(get()) }
+        single<IBaseNetwork> { IBaseNetworkImp(get()) }
 
         single { RepositoryHelper(get()) }
-        single<LocationRepository> { LocationRepositoryImp(get()) }
+        single<ILocationRepository> { ILocationRepositoryImp(get()) }
 
     }
 
@@ -62,11 +62,11 @@ class AppController : Application() {
     }
 
     object RetrofitFactory {
-        fun makeRetrofitService(): NetworkApi {
+        fun makeRetrofitService(): INetworkApi {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .build().create(NetworkApi::class.java)
+                .build().create(INetworkApi::class.java)
         }
     }
 
