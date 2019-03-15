@@ -6,7 +6,7 @@ import java.io.IOException
 
 interface IBaseNetwork {
     var apiUrl: String
-    var apiEndPoint: String
+    val apiEndPoint: String
     var apiErrorMessage: String
     val apiSuccessCode: Int
     var apiParams: HashMap<String, String>

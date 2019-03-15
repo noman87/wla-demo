@@ -9,6 +9,7 @@ import okhttp3.ResponseBody
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import retrofit2.Response
+import java.net.URI
 
 open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
     private val webRequestHelper: WebRequestHelper by inject()
@@ -71,7 +72,7 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
     override lateinit var apiMethod: String
     override var apiHttpResponseCode: Int = 0
     override lateinit var apiUrl: String
-    override lateinit var apiEndPoint: String
+    override val apiEndPoint: String get() = URI(this.apiUrl).path
     override lateinit var apiErrorMessage: String
     override val apiSuccessCode: Int = 0
     override lateinit var apiParams: HashMap<String, String>
