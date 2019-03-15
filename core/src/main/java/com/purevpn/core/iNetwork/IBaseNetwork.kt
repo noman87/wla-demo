@@ -1,8 +1,8 @@
 package com.purevpn.core.iNetwork
 
-import com.purevpn.core.models.ApiEnvelope
 import com.purevpn.core.models.Result
 import java.io.IOException
+import java.lang.reflect.Type
 
 interface IBaseNetwork {
     var apiUrl: String
@@ -16,8 +16,12 @@ interface IBaseNetwork {
     var apiHttpResponseCode: Int
 
 
-    suspend fun <T> get(url: String, params: HashMap<String, String>,headers:HashMap<String,String>, classOfT: Class<T>): Result<ApiEnvelope<T?>>
-
+    suspend fun get(
+        url: String,
+        params: HashMap<String, String>,
+        headers: HashMap<String, String>,
+        type: Type
+    ):Any?
 
 
     suspend fun <T : Any?> safeApiCall(call: suspend () -> Result<T>, errorMessage: String): Result<T> = try {

@@ -1,10 +1,11 @@
 package com.purevpn.network
 
+import com.google.gson.reflect.TypeToken
 import com.purevpn.core.helper.ApiUrls
 import com.purevpn.core.helper.Constants
 import com.purevpn.core.iNetwork.ILocationNetwork
+import com.purevpn.core.models.ApiEnvelope
 import com.purevpn.core.models.LocationModel
-import com.purevpn.core.models.Result
 
 class LocationNetworkImpl : BaseNetworkImpl(), ILocationNetwork {
 
@@ -13,21 +14,19 @@ class LocationNetworkImpl : BaseNetworkImpl(), ILocationNetwork {
         get() = Constants.SUCCESS_CODE_ONE
 
 
-    override suspend fun getLocation(params: HashMap<String, String>): Result<LocationModel?> {
+    override suspend fun getLocation(params: HashMap<String, String>): LocationModel? {
         val headers = HashMap<String, String>()
-        headers.put(Constants.X_PSK_KEY, Constants.X_PSK_KEY_VALUE)
-        val response = get(ApiUrls.IP_2_LOCATION, params, headers, LocationModel::class.java)
-        return when (response) {
-            is Result.Success -> {
-                val responseBody = response.data.body
-                responseBody?.message = response.data.header?.message
-                Result.Success(responseBody)
-            }
-            is Result.Error -> {
-                Result.Error(Exception("Error"))
-            }
+        headers[Constants.X_PSK_KEY] = Constants.X_PSK_KEY_VALUE
+        val collectionType = object : TypeToken<ApiEnvelope<LocationModel>>() {}.type
+        val response = get(ApiUrls.IP_2_LOCATION, params, headers, collectionType)
+        if (response != null) {
+            val apiEnvelope = response as ApiEnvelope<LocationModel>
+            if (apiEnvelope.header?.code == apiSuccessCode)
+                return apiEnvelope.body
+            else return null
         }
-    }
+        return null
 
+    }
 
 }
