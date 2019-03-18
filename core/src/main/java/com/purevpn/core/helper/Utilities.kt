@@ -5,7 +5,7 @@ import java.lang.reflect.Type
 
 
 object Utilities {
-    fun <T> getResponse(response: String, type:Type): T? {
+    fun <T> mapModel(response: String, type:Type): T? {
         return Gson().fromJson(response, type)
     }
 }

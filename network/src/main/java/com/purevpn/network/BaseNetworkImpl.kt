@@ -3,7 +3,6 @@ package com.purevpn.network
 import com.purevpn.core.helper.Utilities
 import com.purevpn.core.helper.WebRequestHelper
 import com.purevpn.core.iNetwork.IBaseNetwork
-import com.purevpn.core.models.Result
 import okhttp3.ResponseBody
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -13,23 +12,22 @@ import java.net.URI
 
 open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
     private val webRequestHelper: WebRequestHelper by inject()
-    override suspend fun get(url: String, params: HashMap<String, String>, headers: HashMap<String, String>, type: Type): Any? {
+    override suspend fun get(
+        url: String,
+        params: HashMap<String, String>,
+        headers: HashMap<String, String>,
+        type: Type
+    ): Any? {
         setProperties(url, params, headers)
-        val httpResponse = webRequestHelper.get(apiUrl, apiParams, apiHttpHeaders)
-        try {
-            when (httpResponse) {
-                is Result.Success -> {
-                    httpResponse.data.apply {
-                        setHttpApiProperties(this)
-                        trackApi(this)
-                        return Utilities.getResponse<Any>(body()?.string().orEmpty(), type)
-                    }
-                }
-                is Result.Error -> return null
+        val httpResponse: Response<ResponseBody>? = webRequestHelper.get(apiUrl, apiParams, apiHttpHeaders)
+        httpResponse?.run {
+            setHttpApiProperties(this)
+            trackApi(this)
+            return body()?.string()?.let {
+                Utilities.mapModel<Any>(it, type)
             }
-        } catch (e: Exception) {
-            return null
         }
+        return null
     }
 
     private fun trackApi(response: Response<ResponseBody>) {

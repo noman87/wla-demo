@@ -19,14 +19,17 @@ class LocationNetworkImpl : BaseNetworkImpl(), ILocationNetwork {
         headers[Constants.X_PSK_KEY] = Constants.X_PSK_KEY_VALUE
         val collectionType = object : TypeToken<ApiEnvelope<LocationModel>>() {}.type
         val response = get(ApiUrls.IP_2_LOCATION, params, headers, collectionType)
-        if (response != null) {
+
+        response?.run {
             val apiEnvelope = response as ApiEnvelope<LocationModel>
-            if (apiEnvelope.header?.code == apiSuccessCode)
-                return apiEnvelope.body
-            else return null
+            return if (apiEnvelope.header?.code == apiSuccessCode)
+                apiEnvelope.body?.let {
+                    apiEnvelope.body
+                }
+            else null
+
         }
         return null
-
     }
 
 }
