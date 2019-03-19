@@ -14,11 +14,6 @@ class WebRequestHelper : KoinComponent {
         url: String,
         params: HashMap<String, String>,
         header: HashMap<String, String>
-    ): Response<ResponseBody>? {
-        try {
-            return networkApi.callGetRequest(url, params, header).await()
-        } catch (e: Exception) {
-            return null
-        }
-    }
+
+    ): Response<ResponseBody>? = networkApi.callGetRequest(url, params, header).await()
 }

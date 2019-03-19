@@ -22,15 +22,16 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
         val httpResponse: Response<ResponseBody>? = webRequestHelper.get(apiUrl, apiParams, apiHttpHeaders)
         httpResponse?.run {
             setHttpApiProperties(this)
-            trackApi(this)
+            sendApiEvent(this)
             return body()?.string()?.let {
                 Utilities.mapModel<Any>(it, type)
+
             }
         }
         return null
     }
 
-    private fun trackApi(response: Response<ResponseBody>) {
+    private fun sendApiEvent(response: Response<ResponseBody>) {
 
     }
 

@@ -28,8 +28,10 @@ data class LocationModel(
     @SerializedName("isp")
     var isp: String? = null,
 
-    var message: String? = null
+    var message: String? = null,
+
+    var code: Int
 
 ) {
-    constructor() : this(0, null, null, null, null, null, null)
+    constructor() : this(0, null, null, null, null, null, null, -1)
 }

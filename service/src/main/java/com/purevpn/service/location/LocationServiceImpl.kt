@@ -11,8 +11,12 @@ class LocationServiceImpl(private val locationRepo: LocationDao, private val loc
     override suspend fun getLocation(): LocationModel? {
         val params = HashMap<String, String>()
         params["method"] = "json"
-        return locationNetwork.getLocation(params)
-
+        val location = locationNetwork.getLocation(params)
+        location?.apply {
+            if (code == locationNetwork.apiSuccessCode)
+                return this
+        }
+        return null
 
     }
 
