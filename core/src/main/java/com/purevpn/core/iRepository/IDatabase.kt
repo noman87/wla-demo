@@ -1,10 +1,11 @@
 package com.purevpn.core.iRepository
 
-import com.purevpn.core.models.LocationModel
 import io.realm.RealmModel
+import io.realm.RealmObject
 
-interface ILocationRepository {
+interface IDatabase {
+    suspend fun insert(obj: RealmObject):Boolean
 
-    suspend fun insertLocation(location: LocationModel):Boolean
     suspend fun<T : RealmModel> findById(columnName:String, id:Int, dataClass: Class<T>):T?
+
 }

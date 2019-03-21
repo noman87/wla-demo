@@ -18,7 +18,9 @@ class LocationNetworkImpl : BaseNetworkImpl(), ILocationNetwork {
         val headers = HashMap<String, String>()
         headers[Constants.X_PSK_KEY] = Constants.X_PSK_KEY_VALUE
         val collectionType = object : TypeToken<ApiEnvelope<LocationModel>>() {}.type
+
         val response = get(ApiUrls.IP_2_LOCATION, params, headers, collectionType)
+
         response?.run {
             val apiEnvelope = response as ApiEnvelope<LocationModel>
             return apiEnvelope.body?.apply {

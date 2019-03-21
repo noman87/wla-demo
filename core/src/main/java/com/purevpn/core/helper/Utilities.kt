@@ -6,6 +6,10 @@ import java.lang.reflect.Type
 
 object Utilities {
     fun <T> mapModel(response: String, type:Type): T? {
-        return Gson().fromJson(response, type)
+        return try {
+            Gson().fromJson(response, type)
+        }catch (e:Exception){
+            null
+        }
     }
 }

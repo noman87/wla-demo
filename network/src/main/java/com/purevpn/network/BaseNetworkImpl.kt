@@ -33,6 +33,8 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
 
     private fun sendApiEvent(response: Response<ResponseBody>) {
 
+
+
     }
 
     private fun setHttpApiProperties(httpResponse: Response<ResponseBody>?) {
