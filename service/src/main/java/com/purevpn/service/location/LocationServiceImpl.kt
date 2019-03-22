@@ -1,6 +1,7 @@
 package com.purevpn.service.location
 
 import android.util.Log
+import com.purevpn.core.enums.DatabaseOperations
 import com.purevpn.core.iNetwork.ILocationNetwork
 import com.purevpn.core.iRepository.ILocationRepository
 import com.purevpn.core.iService.ILocationService
@@ -16,28 +17,16 @@ class LocationServiceImpl(private val locationNetwork: ILocationNetwork) :
         params["method"] = "json"
         val location = locationNetwork.getLocation(params)
 
-        val list = listOf(location)
-
-        val myPredicates: (LocationModel?) -> Boolean = {
-            it?.city.equals("karachi")
-        }
-
-
-
-
-
-
-
         location?.apply {
             if (code == locationNetwork.apiSuccessCode) {
                 val isSuccess = locationRepository.insertLocation(this)
 
-                val findById =
-                    locationRepository.findById(::id.name, 7066894809033623473.toInt(), LocationModel::class.java)
-                findById.run {
+                val locationModel =
+                    locationRepository.findAllLocationsByCountry("Pakistan", DatabaseOperations.EQUAL_TO)
+
+                locationModel.run {
                     Log.e("IP", ip)
                 }
-                Log.d("IsSuccess", "" + isSuccess)
                 return this
             }
 

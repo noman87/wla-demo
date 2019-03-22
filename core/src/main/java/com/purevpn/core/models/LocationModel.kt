@@ -10,10 +10,10 @@ import java.util.*
  * LocationModel
  */
 
-open class LocationModel(
+open  class LocationModel(
 
     @PrimaryKey
-    var id: Long = UUID.randomUUID().mostSignificantBits,
+    var id:Int = UUID.randomUUID().mostSignificantBits.toInt(),
     var ip: String? = null,
     @SerializedName("city")
     var city: String? = null,

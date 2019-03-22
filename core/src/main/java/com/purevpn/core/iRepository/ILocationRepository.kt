@@ -1,10 +1,19 @@
 package com.purevpn.core.iRepository
 
+import com.purevpn.core.enums.DatabaseOperations
 import com.purevpn.core.models.LocationModel
-import io.realm.RealmModel
 
 interface ILocationRepository {
 
-    suspend fun insertLocation(location: LocationModel):Boolean
-    suspend fun<T : RealmModel> findById(columnName:String, id:Int, dataClass: Class<T>):T?
+
+    suspend fun insertLocation(location: LocationModel): Boolean
+
+
+    suspend fun findAllLocationsByCountry(countryName: String, dbOperation: DatabaseOperations): List<LocationModel>
+
+    suspend fun findAllLocations(dbOperation: DatabaseOperations?): List<LocationModel>
+
+    suspend fun findAllLocationByIsoCodeAndIpAddress(isoCode: String, ipAddress: String): List<LocationModel>
+
+
 }
