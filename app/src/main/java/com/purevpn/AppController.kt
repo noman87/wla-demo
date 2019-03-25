@@ -9,7 +9,6 @@ import com.purevpn.core.iNetwork.IBaseNetwork
 import com.purevpn.core.iNetwork.ILocationNetwork
 import com.purevpn.core.iNetwork.INetworkApi
 import com.purevpn.core.iRepository.IBaseRepository
-import com.purevpn.core.iRepository.IDatabase
 import com.purevpn.core.iRepository.ILocationRepository
 import com.purevpn.core.iService.ILocationService
 import com.purevpn.network.BaseNetworkImpl
@@ -39,7 +38,6 @@ class AppController : Application() {
 
         single<IBaseRepository> { BaseRepositoryImpl() }
 
-        single<IDatabase>{DatabaseImpl()}
 
     }
 
