@@ -24,6 +24,9 @@ class LocationServiceImpl(private val locationNetwork: ILocationNetwork) :
                 val locationModel =
                     locationRepository.findAllLocationsByCountry("Pakistan", DatabaseOperations.EQUAL_TO)
 
+                val locationModelOtherThanPak =
+                    locationRepository.findAllLocationsByCountry("Pakistan", DatabaseOperations.NOT_EQUAL_TO)
+
                 locationModel.run {
                     Log.e("IP", ip)
                 }

@@ -19,12 +19,7 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
     }
 
 
-    override suspend fun <T : RealmObject> findAll(
-        columnName: String,
-        data: String,
-        dataClass: Class<T>,
-        dbOperation: DatabaseOperations
-    ): List<T> {
+    override suspend fun <T : RealmObject> findAll(columnName: String, data: String, dataClass: Class<T>, dbOperation: DatabaseOperations): List<T> {
         val realmResult = getQuery(columnName, data, dataClass, dbOperation).findAll()
         val list = realm.copyFromRealm(realmResult)
         closeDatabase(realm)
@@ -46,9 +41,7 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
     }
 
 
-    override suspend fun <T : RealmObject> find(
-        columnName: String, data: String, dataClass: Class<T>, dbOperation: DatabaseOperations
-    ): T? {
+    override suspend fun <T : RealmObject> find(columnName: String, data: String, dataClass: Class<T>, dbOperation: DatabaseOperations): T? {
         val realmResult = getQuery(columnName, data, dataClass, dbOperation).findFirst()
         val obj = realm.copyFromRealm(realmResult)
         closeDatabase(realm)
@@ -56,12 +49,7 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
     }
 
 
-    private fun <T : RealmObject> getQuery(
-        columnName: String?,
-        data: String?,
-        dataClass: Class<T>,
-        dbOperation: DatabaseOperations?
-    ): RealmQuery<T> {
+    private fun <T : RealmObject> getQuery(columnName: String?, data: String?, dataClass: Class<T>, dbOperation: DatabaseOperations?): RealmQuery<T> {
 
         return when (dbOperation) {
             DatabaseOperations.EQUAL_TO -> {
