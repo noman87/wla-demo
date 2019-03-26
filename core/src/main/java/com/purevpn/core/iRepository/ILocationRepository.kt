@@ -7,8 +7,6 @@ interface ILocationRepository {
 
 
     suspend fun insertLocation(location: LocationModel): Boolean
-
-
     suspend fun findAllLocationsByCountry(countryName: String, dbOperation: DatabaseOperations): List<LocationModel>
 
     suspend fun findAllLocations(dbOperation: DatabaseOperations?): List<LocationModel>

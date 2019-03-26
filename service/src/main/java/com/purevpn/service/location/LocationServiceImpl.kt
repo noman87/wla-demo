@@ -8,10 +8,13 @@ import com.purevpn.core.iService.ILocationService
 import com.purevpn.core.models.LocationModel
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
+import java.util.*
 
 class LocationServiceImpl(private val locationNetwork: ILocationNetwork) :
     ILocationService, KoinComponent {
     private val locationRepository: ILocationRepository by inject()
+
+
     override suspend fun getLocation(): LocationModel? {
         val params = HashMap<String, String>()
         params["method"] = "json"
@@ -19,10 +22,13 @@ class LocationServiceImpl(private val locationNetwork: ILocationNetwork) :
 
         location?.apply {
             if (code == locationNetwork.apiSuccessCode) {
+                id = UUID.randomUUID().mostSignificantBits.toInt()
                 val isSuccess = locationRepository.insertLocation(this)
 
                 val locationModel =
                     locationRepository.findAllLocationsByCountry("Pakistan", DatabaseOperations.EQUAL_TO)
+
+
 
                 val locationModelOtherThanPak =
                     locationRepository.findAllLocationsByCountry("Pakistan", DatabaseOperations.NOT_EQUAL_TO)

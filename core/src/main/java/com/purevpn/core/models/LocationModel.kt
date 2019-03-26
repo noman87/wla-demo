@@ -1,28 +1,28 @@
 package com.purevpn.core.models
 
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
-import java.util.*
+import com.purevpn.core.iModels.ILocationModel
 
 
 /**
  * LocationModel
  */
 
-open  class LocationModel(
-
-    @PrimaryKey
-    var id:Int = UUID.randomUUID().mostSignificantBits.toInt(),
-    var ip: String? = null,
+class LocationModel : ILocationModel {
+    override var id: Int = 0
+    @SerializedName("ip")
+    override var ip: String? = null
     @SerializedName("city")
-    var city: String? = null,
+    override var city: String? = null
     @SerializedName("country")
-    var country: String? = null,
+    override var country: String? = null
     @SerializedName("iso2")
-    var iso2: String? = null,
+    override var iso2: String? = null
     @SerializedName("isp")
-    var isp: String? = null,
-    var message: String? = null,
-    var code: Int = -1
-) : RealmObject()
+    override var isp: String? = null
+    override var message: String? = null
+    override var code: Int = 0
+
+
+
+}

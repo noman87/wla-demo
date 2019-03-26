@@ -89,6 +89,10 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
     api "com.squareup.moshi:moshi-kotlin:1.8.0"
 
+    api 'org.modelmapper:modelmapper:2.3.0'
+
+    api "io.reactivex.rxjava2:rxjava:2.2.6"
+
 
 }
 repositories {
