@@ -28,7 +28,7 @@ class AppController : Application() {
 
         single<ILocationNetwork> { LocationNetworkImpl() }
 
-        single<ILocationService> { LocationServiceImpl(get()) }
+        single<ILocationService> { LocationServiceImpl() }
 
         single { WebRequestHelper() }
 

@@ -10,10 +10,11 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.*
 
-class LocationServiceImpl(private val locationNetwork: ILocationNetwork) :
+class LocationServiceImpl :
     ILocationService, KoinComponent {
-    private val locationRepository: ILocationRepository by inject()
 
+    private val locationRepository: ILocationRepository by inject()
+    private val locationNetwork: ILocationNetwork by inject()
 
     override suspend fun getLocation(): LocationModel? {
         val params = HashMap<String, String>()
@@ -27,7 +28,6 @@ class LocationServiceImpl(private val locationNetwork: ILocationNetwork) :
 
                 val locationModel =
                     locationRepository.findAllLocationsByCountry("Pakistan", DatabaseOperations.EQUAL_TO)
-
 
 
                 val locationModelOtherThanPak =
