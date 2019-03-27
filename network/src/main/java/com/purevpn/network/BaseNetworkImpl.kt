@@ -7,24 +7,20 @@ import okhttp3.ResponseBody
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import retrofit2.Response
-import java.lang.reflect.Type
+import java.lang.reflect.ParameterizedType
 import java.net.URI
+
 
 open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
     private val webRequestHelper: WebRequestHelper by inject()
-    override suspend fun get(
-        url: String,
-        params: HashMap<String, String>,
-        headers: HashMap<String, String>,
-        type: Type
-    ): Any? {
+    override suspend fun <T> get(url: String, params: HashMap<String, String>, headers: HashMap<String, String>, type: T, parameterizedType: ParameterizedType): T? {
         setProperties(url, params, headers)
         val httpResponse: Response<ResponseBody>? = webRequestHelper.get(apiUrl, apiParams, apiHttpHeaders)
         httpResponse?.run {
             setHttpApiProperties(this)
             sendApiEvent(this)
             return body()?.string()?.let {
-                Utilities.mapModel<Any>(it, type)
+                Utilities.mapModel(type, it, parameterizedType)
 
             }
         }
@@ -32,7 +28,6 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
     }
 
     private fun sendApiEvent(response: Response<ResponseBody>) {
-
 
 
     }

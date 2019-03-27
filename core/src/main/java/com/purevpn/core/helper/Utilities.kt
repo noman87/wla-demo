@@ -1,15 +1,14 @@
 package com.purevpn.core.helper
 
-import com.google.gson.Gson
-import java.lang.reflect.Type
+import com.squareup.moshi.Moshi
+import java.lang.reflect.ParameterizedType
 
 
 object Utilities {
-    fun <T> mapModel(response: String, type: Type): T? {
-        return try {
-            Gson().fromJson(response, type)
-        } catch (e: Exception) {
-            null
-        }
+    fun <T> mapModel(t: T, response: String, type: ParameterizedType): T? {
+        val moshi = Moshi.Builder().build()
+        val adapter = moshi.adapter<T>(type)
+        return adapter.fromJson(response)
+
     }
 }

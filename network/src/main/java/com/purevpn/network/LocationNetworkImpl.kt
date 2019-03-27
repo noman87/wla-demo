@@ -1,11 +1,11 @@
 package com.purevpn.network
 
-import com.google.gson.reflect.TypeToken
 import com.purevpn.core.helper.ApiUrls
 import com.purevpn.core.helper.Constants
 import com.purevpn.core.iNetwork.ILocationNetwork
 import com.purevpn.core.models.ApiEnvelope
 import com.purevpn.core.models.LocationModel
+import com.squareup.moshi.Types
 
 class LocationNetworkImpl : BaseNetworkImpl(), ILocationNetwork {
 
@@ -17,14 +17,13 @@ class LocationNetworkImpl : BaseNetworkImpl(), ILocationNetwork {
     override suspend fun getLocation(params: HashMap<String, String>): LocationModel? {
         val headers = HashMap<String, String>()
         headers[Constants.X_PSK_KEY] = Constants.X_PSK_KEY_VALUE
-        val collectionType = object : TypeToken<ApiEnvelope<LocationModel>>() {}.type
+        val parameterizedType = Types.newParameterizedType(ApiEnvelope::class.java, LocationModel::class.java)
+        val response = get(ApiUrls.IP_2_LOCATION, params, headers, ApiEnvelope<LocationModel>(), parameterizedType)
 
-        val response = get(ApiUrls.IP_2_LOCATION, params, headers, collectionType)
 
         response?.run {
-            val apiEnvelope = response as ApiEnvelope<LocationModel>
-            return apiEnvelope.body?.apply {
-                apiEnvelope.header?.let {
+            return body?.apply {
+                header?.let {
                     this.code = it.code
                     this.message = it.message
                 }
