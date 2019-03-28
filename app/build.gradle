@@ -60,8 +60,11 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version" // For Kotlin use navigation-ui-ktx
 
 
+    implementation Dependencies.androidViewPager
+
     implementation project(':service')
     implementation project(':core')
     implementation project(':repository')
     implementation project(':network')
+    implementation 'com.google.android.material:material:1.0.0'
 }

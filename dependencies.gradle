@@ -17,6 +17,7 @@ ext {
     androidLifeCycle = '1.1.1'
     daggerVersion = '2.13'
     koinAndroidArch = '1.0.0-alpha-12'
+    androidViewPagerVersion = '1.0.0'
 
 
     TestDependencies = [
@@ -59,7 +60,9 @@ ext {
             daggerAnnotation       : "com.google.dagger:dagger-compiler:$daggerVersion",
 
             daggerAndroid          : "com.google.dagger:dagger-android-support:$daggerVersion",
-            daggerAndroidAnnotation: "com.google.dagger:dagger-android-processor:$daggerVersion"
+            daggerAndroidAnnotation: "com.google.dagger:dagger-android-processor:$daggerVersion",
+            
+            androidViewPager       : "androidx.viewpager:viewpager:$androidViewPagerVersion"
 
 
     ]
