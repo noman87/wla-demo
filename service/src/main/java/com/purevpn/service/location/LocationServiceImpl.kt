@@ -1,7 +1,6 @@
 package com.purevpn.service.location
 
 import android.util.Log
-import com.purevpn.core.enums.DatabaseOperations
 import com.purevpn.core.iNetwork.ILocationNetwork
 import com.purevpn.core.iRepository.ILocationRepository
 import com.purevpn.core.iService.ILocationService
@@ -27,11 +26,11 @@ class LocationServiceImpl :
                 val isSuccess = locationRepository.insertLocation(this)
 
                 val locationModel =
-                    locationRepository.findAllLocationsByCountry("Pakistan", DatabaseOperations.EQUAL_TO)
+                    locationRepository.findAllLocationsByCountry("Pakistan")
 
 
                 val locationModelOtherThanPak =
-                    locationRepository.findAllLocationsByCountry("Pakistan", DatabaseOperations.NOT_EQUAL_TO)
+                    locationRepository.findAllLocationByIsoCodeAndIpAddress("US","10.10.10.10")
 
                 locationModel.run {
                     Log.e("IP", ip)

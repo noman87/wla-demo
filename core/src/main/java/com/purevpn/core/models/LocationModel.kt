@@ -22,7 +22,7 @@ class LocationModel : ILocationModel {
     override var isp: String? = null
     override var message: String? = null
     override var code: Int = 0
-
+    var test: String = city + country
 
 
 }

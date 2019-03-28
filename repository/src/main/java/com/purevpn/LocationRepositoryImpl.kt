@@ -1,42 +1,51 @@
 package com.purevpn
 
-import com.google.gson.reflect.TypeToken
 import com.purevpn.core.enums.DatabaseOperations
 import com.purevpn.core.iRepository.ILocationRepository
 import com.purevpn.core.models.LocationModel
 import com.purevpn.models.LocationRepoModel
-import org.modelmapper.ModelMapper
+import com.purevpn.models.QueryDataModel
+import com.purevpn.models.QueryModel
 
 class LocationRepositoryImpl : BaseRepositoryImpl(), ILocationRepository {
 
     override suspend fun insertLocation(location: LocationModel): Boolean {
-        return insert(ModelMapper().map(location, LocationRepoModel::class.java))
+        return insert(location, LocationRepoModel::class.java)
     }
 
     override suspend fun findAllLocationByIsoCodeAndIpAddress(isoCode: String, ipAddress: String): List<LocationModel> {
-        val database = getDatabase()
-        val realmResults = database.where(LocationRepoModel::class.java).equalTo(LocationRepoModel::iso2.name, isoCode).and()
-            .equalTo(LocationModel::ip.name, ipAddress).findAll()
-        val realmList = database.copyFromRealm(realmResults)
-        closeDatabase(database)
-        val listType = object : TypeToken<List<LocationModel>>() {}.type
-        return ModelMapper().map(realmList, listType)
+
+        val databaseOperations = DatabaseOperations()
+        databaseOperations.selectOperations = DatabaseOperations.SelectOperations.EQUAL_TO
+
+        val databaseOperationsSecond = DatabaseOperations()
+        databaseOperationsSecond.selectOperations = DatabaseOperations.SelectOperations.EQUAL_TO
+        databaseOperationsSecond.logicalOperations = DatabaseOperations.LogicalOperations.AND
+        val queryOne = QueryDataModel(LocationRepoModel::iso2.name, databaseOperations, isoCode)
+        val querySecond = QueryDataModel(LocationRepoModel::ip.name, databaseOperationsSecond, ipAddress)
+        val queryModel = QueryModel(LocationRepoModel::class.java, listOf(queryOne, querySecond))
+
+
+        return findAll(queryModel)
 
     }
 
 
-    override suspend fun findAllLocationsByCountry(countryName: String, dbOperation: DatabaseOperations): List<LocationModel> {
-        val realmList = findAll(LocationModel::country.name, countryName, LocationRepoModel::class.java, dbOperation)
-        val listType = object : TypeToken<List<LocationModel>>() {}.type
-        return ModelMapper().map(realmList, listType)
+    override suspend fun findAllLocationsByCountry(countryName: String): List<LocationModel> {
+        val databaseOperations = DatabaseOperations()
+        databaseOperations.selectOperations = DatabaseOperations.SelectOperations.EQUAL_TO
+        val queryDataModel = QueryDataModel(LocationRepoModel::country.name, databaseOperations, countryName)
+
+        val queryModel = QueryModel(LocationRepoModel::class.java, listOf(queryDataModel))
+        return findAll(queryModel)
 
 
     }
 
-    override suspend fun findAllLocations(dbOperation: DatabaseOperations?): List<LocationModel> {
-        val realmList = findAll(LocationRepoModel::class.java)
-        val listType = object : TypeToken<List<LocationModel>>() {}.type
-        return ModelMapper().map(realmList, listType)
+    override suspend fun findAllLocations(): List<LocationModel> {
+        val queryDataModel = QueryDataModel(LocationRepoModel::country.name, null, null)
+        val queryModel = QueryModel(LocationRepoModel::class.java, listOf(queryDataModel))
+        return findAll(queryModel)
     }
 
 
