@@ -27,12 +27,12 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
     }
 
 
-    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> findAll(queryModel: QueryModel<DATA_CLASS, DATA>): List<RESULT> {
+    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> findAll(queryModel: QueryModel<DATA_CLASS, DATA>, resultClass:Class<RESULT>): List<RESULT>? {
         val query = getQuery(queryModel)
         val allResult = query.findAll()
         val realmList = realm.copyFromRealm(allResult)
-        val listType = object : TypeToken<RESULT>() {}.type
-        return ModelMapper().map(realmList, listType)
+        val map = ModelMapper().map<List<RESULT>>(realmList, resultClass)
+        return map
 
     }
 

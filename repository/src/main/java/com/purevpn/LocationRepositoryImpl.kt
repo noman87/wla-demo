@@ -13,7 +13,7 @@ class LocationRepositoryImpl : BaseRepositoryImpl(), ILocationRepository {
         return insert(location, LocationRepoModel::class.java)
     }
 
-    override suspend fun findAllLocationByIsoCodeAndIpAddress(isoCode: String, ipAddress: String): List<LocationModel> {
+    override suspend fun findAllLocationByIsoCodeAndIpAddress(isoCode: String, ipAddress: String): List<LocationModel>? {
 
         val databaseOperations = DatabaseOperations()
         databaseOperations.selectOperations = DatabaseOperations.SelectOperations.EQUAL_TO
@@ -26,26 +26,28 @@ class LocationRepositoryImpl : BaseRepositoryImpl(), ILocationRepository {
         val queryModel = QueryModel(LocationRepoModel::class.java, listOf(queryOne, querySecond))
 
 
-        return findAll(queryModel)
+        return findAll(queryModel,LocationModel::class.java)
+
 
     }
 
 
-    override suspend fun findAllLocationsByCountry(countryName: String): List<LocationModel> {
+
+    override suspend fun findAllLocationsByCountry(countryName: String): List<LocationModel>? {
         val databaseOperations = DatabaseOperations()
         databaseOperations.selectOperations = DatabaseOperations.SelectOperations.EQUAL_TO
         val queryDataModel = QueryDataModel(LocationRepoModel::country.name, databaseOperations, countryName)
-
         val queryModel = QueryModel(LocationRepoModel::class.java, listOf(queryDataModel))
-        return findAll(queryModel)
+        val findAll = findAll(queryModel, LocationModel::class.java)
+        return findAll
 
 
     }
 
-    override suspend fun findAllLocations(): List<LocationModel> {
+    override suspend fun findAllLocations(): List<LocationModel>? {
         val queryDataModel = QueryDataModel(LocationRepoModel::country.name, null, null)
         val queryModel = QueryModel(LocationRepoModel::class.java, listOf(queryDataModel))
-        return findAll(queryModel)
+        return findAll(queryModel, LocationModel::class.java)
     }
 
 
