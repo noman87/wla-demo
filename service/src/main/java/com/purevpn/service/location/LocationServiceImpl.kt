@@ -29,8 +29,8 @@ class LocationServiceImpl :
                     locationRepository.findAllLocationsByCountry("Pakistan")
 
 
-                val locationModelOtherThanPak =
-                    locationRepository.findAllLocationByIsoCodeAndIpAddress("US","10.10.10.10")
+                /*val locationModelOtherThanPak =
+                    locationRepository.findAllLocationByIsoCodeAndIpAddress("US","10.10.10.10")*/
 
                 locationModel.run {
                     Log.e("IP", ip)

@@ -10,6 +10,7 @@ import io.realm.RealmObject
 import io.realm.RealmQuery
 import org.koin.standalone.KoinComponent
 import org.modelmapper.ModelMapper
+import java.lang.reflect.Type
 
 
 open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
@@ -27,12 +28,11 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
     }
 
 
-    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> findAll(queryModel: QueryModel<DATA_CLASS, DATA>, resultClass:Class<RESULT>): List<RESULT>? {
+    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> findAll(queryModel: QueryModel<DATA_CLASS, DATA>, type: Type): List<RESULT>? {
         val query = getQuery(queryModel)
         val allResult = query.findAll()
         val realmList = realm.copyFromRealm(allResult)
-        val map = ModelMapper().map<List<RESULT>>(realmList, resultClass)
-        return map
+        return  ModelMapper().map(realmList, type)
 
     }
 
