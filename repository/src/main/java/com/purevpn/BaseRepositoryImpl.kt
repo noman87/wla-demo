@@ -1,6 +1,5 @@
 package com.purevpn
 
-import com.google.gson.reflect.TypeToken
 import com.purevpn.core.enums.DatabaseOperations
 import com.purevpn.core.iRepository.IBaseRepository
 import com.purevpn.models.QueryModel
@@ -37,13 +36,12 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
     }
 
 
-    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> find(queryModel: QueryModel<DATA_CLASS, DATA>): RESULT? {
+    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> find(queryModel: QueryModel<DATA_CLASS, DATA>,type: Type): RESULT? {
         val query = getQuery(queryModel)
         val result = query.findFirst()
         result?.apply {
             val resultObject = realm.copyFromRealm(result)
-            val listType = object : TypeToken<RESULT>() {}.type
-            return ModelMapper().map(resultObject, listType)
+            return ModelMapper().map(resultObject, type)
         }
         return null
     }

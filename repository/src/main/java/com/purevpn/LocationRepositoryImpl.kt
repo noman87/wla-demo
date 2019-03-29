@@ -18,7 +18,9 @@ class LocationRepositoryImpl : BaseRepositoryImpl(), ILocationRepository {
     override suspend fun findAllLocationsByCountry(countryName: String): List<LocationModel>? {
         val databaseOperations = DatabaseOperations()
         databaseOperations.selectOperations = DatabaseOperations.SelectOperations.EQUAL_TO
+
         val queryDataModel = QueryDataModel(LocationRepoModel::country.name, databaseOperations, countryName)
+
         val queryModel = QueryModel(LocationRepoModel::class.java, listOf(queryDataModel))
         val listType = object : TypeToken<List<LocationModel>>() {}.type
 
@@ -29,10 +31,13 @@ class LocationRepositoryImpl : BaseRepositoryImpl(), ILocationRepository {
         val databaseOperations = DatabaseOperations()
         databaseOperations.selectOperations = DatabaseOperations.SelectOperations.EQUAL_TO
         val databaseOperationsSecond = DatabaseOperations()
+
         databaseOperationsSecond.selectOperations = DatabaseOperations.SelectOperations.EQUAL_TO
         databaseOperationsSecond.logicalOperations = DatabaseOperations.LogicalOperations.AND
+
         val queryOne = QueryDataModel(LocationRepoModel::iso2.name, databaseOperations, isoCode)
         val querySecond = QueryDataModel(LocationRepoModel::ip.name, databaseOperationsSecond, ipAddress)
+
         val queryModel = QueryModel(LocationRepoModel::class.java, listOf(queryOne, querySecond))
         val listType = object : TypeToken<List<LocationModel>>() {}.type
         return findAll(queryModel, listType)
@@ -46,9 +51,13 @@ class LocationRepositoryImpl : BaseRepositoryImpl(), ILocationRepository {
         return findAll(queryModel, LocationModel::class.java)
     }
 
-    inline fun <reified T : Any> Builder() = Builder(T::class.java)
 
-    class Builder<T>(classOf: Class<T>) {}
+    override suspend fun findSingleLocationByCountryName(countryName: String): LocationModel? {
+        val queryDataModel = QueryDataModel(LocationRepoModel::country.name, null, countryName)
+        val queryModel = QueryModel(LocationRepoModel::class.java, listOf(queryDataModel))
+        return find(queryModel,LocationModel::class.java)
+
+    }
 
 
 }
