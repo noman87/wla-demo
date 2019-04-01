@@ -18,6 +18,7 @@ ext {
     daggerVersion = '2.13'
     koinAndroidArch = '1.0.0-alpha-12'
     androidViewPagerVersion = '1.0.0'
+    lottieVersion = '2.5.1'
 
 
     TestDependencies = [
@@ -61,8 +62,10 @@ ext {
 
             daggerAndroid          : "com.google.dagger:dagger-android-support:$daggerVersion",
             daggerAndroidAnnotation: "com.google.dagger:dagger-android-processor:$daggerVersion",
+
+            androidViewPager       : "androidx.viewpager:viewpager:$androidViewPagerVersion",
             
-            androidViewPager       : "androidx.viewpager:viewpager:$androidViewPagerVersion"
+            lotttie                : "com.airbnb.android:lottie:$lottieVersion"
 
 
     ]

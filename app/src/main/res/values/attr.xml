@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="app_colorPrimary" format="reference"/>
+    <attr name="app_colorPrimaryDark" format="reference"/>
+    <attr name="app_colorAccent" format="reference"/>
+    <attr name="app_background" format="reference"/>
+
+    <attr name="connect_button_bg_color" format="reference"/>
+
+</resources>

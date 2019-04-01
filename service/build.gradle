@@ -31,10 +31,10 @@ dependencies {
     implementation project(':repository')
     implementation project(':network')
     implementation project(':core')
-
     testImplementation TestDependencies.junit
     androidTestImplementation TestDependencies.androidxRunner
     androidTestImplementation TestDependencies.espresso
+    implementation project(':AtomSdk')
 }
 repositories {
     mavenCentral()

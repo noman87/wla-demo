@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".dashboard.DashboardFragment">
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view"
+                android:layout_width="@dimen/connect_button_animation_width"
+                android:layout_height="@dimen/connect_button_animation_height"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/large_margin"
+
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="anim/disconnected_dark.json"
+                app:lottie_loop="true"/>
+
+        <Button
+                android:id="@+id/btn_layout"
+                android:layout_width="@dimen/connect_button_width"
+                android:layout_height="@dimen/connect_button_width"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/large_margin"
+                android:background="@drawable/btn_disconnected_bg"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingTop="40dp"
+                android:paddingBottom="40dp"
+                android:stateListAnimator="@anim/raise"
+                android:tag="test"
+                android:text="@string/connect_txt"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/medium_font_dp"/>
+
+    </FrameLayout>
+
+</layout>

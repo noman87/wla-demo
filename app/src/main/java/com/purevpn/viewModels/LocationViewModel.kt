@@ -5,10 +5,9 @@ import androidx.databinding.ObservableField
 import com.purevpn.BaseViewModel
 import com.purevpn.core.iService.ILocationService
 import kotlinx.coroutines.launch
-import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class LocationViewModel(application: Application) : BaseViewModel(application), KoinComponent {
+class LocationViewModel(application: Application) : BaseViewModel(application) {
 
     private val locationService: ILocationService by inject()
     var observableIpField = ObservableField<String>()

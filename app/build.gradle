@@ -32,39 +32,53 @@ android {
     dataBinding {
         enabled true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    configurations.compile {
+        exclude group: 'com.google.code.gson', module: 'gson'
+        exclude group: 'com.google.dagger', module: 'dagger'
+        exclude group: 'com.squareup.okhttp3', module: 'logging-interceptor'
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.squareup.retrofit2', module: 'retrofit'
+        exclude group: 'com.mixpanel.android', module: 'mixpanel-android'
+        exclude group: 'com.squareup.retrofit2', module: 'converter-moshi'
+        exclude group: 'br.com.zbra', module: 'android-linq'
+        exclude group: 'com.squareup.retrofit2', module: 'adapter-rxjava'
+        exclude module: 'rxjava'
+        exclude module: 'reactiveX'
+        exclude module: 'javax.annotation'
+        exclude module: 'okio'
+        exclude group: 'com.squareup.retrofit2'
+        exclude group: 'com.squareup.moshi'
+    }
 }
 
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
-
-
-
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     kapt "android.arch.lifecycle:compiler:1.1.1"
     kapt "androidx.room:room-compiler:2.1.0-alpha04"
-
     //testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-
-
     def nav_version = "2.0.0-rc02"
-
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version" // For Kotlin use navigation-fragment-ktx
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version" // For Kotlin use navigation-ui-ktx
-
-
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    // For Kotlin use navigation-fragment-ktx
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    // For Kotlin use navigation-ui-ktx
     implementation Dependencies.androidViewPager
-
+    implementation Dependencies.lotttie
     implementation project(':service')
     implementation project(':core')
     implementation project(':repository')
     implementation project(':network')
     implementation 'com.google.android.material:material:1.0.0'
+    implementation project(':AtomSdk')
 }
