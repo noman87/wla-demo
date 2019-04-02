@@ -11,13 +11,30 @@
         <variable
                 name="viewModel"
                 type="com.purevpn.dashboard.DashboardViewModel"/>
+
+
+        <variable
+                name="context"
+                type="androidx.fragment.app.FragmentActivity"/>
+
+
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycle_view"
+
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            bind:data="@{viewModel.list}"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                bind:data="@{viewModel.list}"
+                bind:context="@{context}"
+                />
+
+    </LinearLayout>
 
 </layout>

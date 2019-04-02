@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.purevpn.R
 import com.purevpn.core.models.CountryModel
 import com.purevpn.databinding.FragmentCountryBinding
+import kotlinx.android.synthetic.main.fragment_country.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,19 +38,27 @@ class CountryFragment : Fragment() {
     }
 
     private lateinit var dashboardViewModel: DashboardViewModel
-    lateinit var countryList: List<CountryModel>
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.run {
-            dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-            dashboardViewModel.getCountries()
-            CountryAdapter(this).run {
+            dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).also {
+                binding.viewModel = it
+                binding.context = this
+                it.getCountries()
+
+                val observer = Observer<List<CountryModel>> {
+                    recycleView.adapter?.notifyDataSetChanged()
+                }
+                it.list.observe(this@CountryFragment, observer)
+
 
             }
 
 
         }
+
     }
 
 
