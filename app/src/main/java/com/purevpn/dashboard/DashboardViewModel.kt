@@ -9,12 +9,14 @@ import com.purevpn.core.models.CountryModel
 import kotlinx.coroutines.launch
 import org.koin.standalone.inject
 
+
 class DashboardViewModel(application: Application) : BaseViewModel(application) {
 
 
     private val countryService: ICountryService by inject()
 
-
+    var adapter = CountryAdapter(this)
+    var currentPage: MutableLiveData<Int> = MutableLiveData()
     var list: MutableLiveData<List<CountryModel>> = MutableLiveData()
 
     fun getCountries() = backgroundScope.launch {
@@ -25,8 +27,14 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
                 list.postValue(countryList)
             }
 
+
         })
 
+
+    }
+
+    fun onItemClick(countryObject: CountryModel) {
+        currentPage.postValue(0)
 
     }
 

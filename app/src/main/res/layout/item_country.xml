@@ -15,12 +15,17 @@
 
         <variable
                 name="context"
-                type="androidx.fragment.app.FragmentActivity"/>
+                type="android.content.Context"/>
+
+        <variable
+                name="viewModel"
+                type="com.purevpn.dashboard.DashboardViewModel"/>
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:onClick="@{() -> viewModel.onItemClick(country)}"
             android:layout_height="wrap_content">
 
         <ImageView
@@ -33,7 +38,9 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toTopOf="parent"
                 bind:flag="@{country.isoCode}"
-                bind:context="@{context}"/>
+                bind:context="@{context}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="16dp"/>
 
         <TextView
                 tools:text="TextView"

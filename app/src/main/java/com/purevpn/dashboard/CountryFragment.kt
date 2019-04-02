@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.purevpn.R
 import com.purevpn.core.models.CountryModel
 import com.purevpn.databinding.FragmentCountryBinding
-import kotlinx.android.synthetic.main.fragment_country.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,15 +42,15 @@ class CountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.run {
-            dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).also {
-                binding.viewModel = it
-                binding.context = this
-                it.getCountries()
+            dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).apply {
 
+                binding.viewModel = this
+                this.getCountries()
                 val observer = Observer<List<CountryModel>> {
-                    recycleView.adapter?.notifyDataSetChanged()
+                    this.adapter.setData(list)
+
                 }
-                it.list.observe(this@CountryFragment, observer)
+                this.list.observe(this@CountryFragment, observer)
 
 
             }
