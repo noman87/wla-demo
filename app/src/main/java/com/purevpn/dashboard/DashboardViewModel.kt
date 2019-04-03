@@ -52,7 +52,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
     }
 
     override fun onDisconnected(p0: ConnectionDetails?) {
-
+        connectionState.set(ConnectionState.DISCONNECTED)
     }
 
     override fun onRedialing(p0: AtomException?, p1: ConnectionDetails?) {
@@ -60,8 +60,11 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
     }
 
     override fun onStateChange(states: String?) {
-        if(states.equals("connecting")){
-            connectionState.set(ConnectionState.CONNECTED)
+
+        val currentVpnStatus = atomManager.getCurrentVpnStatus(getApplication())
+
+        if (currentVpnStatus == "CONNECTING") {
+            connectionState.set(ConnectionState.CONNECTING)
         }
 
     }
@@ -94,10 +97,21 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
 
     }
 
-    fun onItemClick(countryObject: CountryModel) {
 
+    fun onConnectClick() {
+        if (atomManager.getCurrentVpnStatus(getApplication()) == AtomManager.VPNStatus.CONNECTED) {
+            connectionState.set(ConnectionState.DISCONNECTED)
+            atomManager.disconnect(getApplication())
+
+        }
+
+    }
+
+    fun onItemClick(countryObject: CountryModel) {
+        connectionState.set(ConnectionState.CONNECTING)
         atomManager.setVPNCredentials(VPNCredentials("purevpn0d583299", "smartdns"))
         val protocol = Protocol()
+
         protocol.apply {
             name = "UDP"
             number = 9
@@ -105,7 +119,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
         }
 
         val country = ModelMapper().map(countryObject, Country::class.java)
-        val builder = VPNProperties.Builder(country, protocol).build()
+        val builder = VPNProperties.Builder(country, protocol).withSmartDialing().build()
         atomManager.connect(getApplication(), builder)
         index.set(0)
         index.notifyChange()

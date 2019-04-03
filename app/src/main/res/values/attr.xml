@@ -6,6 +6,9 @@
     <attr name="app_colorAccent" format="reference"/>
     <attr name="app_background" format="reference"/>
 
-    <attr name="connect_button_bg_color" format="reference"/>
+    <attr name="connectButtonBgColor" format="reference"/>
+    <attr name="connectingButtonBgColor" format="reference"/>
+    <attr name="connectedButtonBgColor" format="reference"/>
+
 
 </resources>

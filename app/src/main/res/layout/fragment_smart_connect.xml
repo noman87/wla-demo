@@ -26,7 +26,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/large_margin"
                 app:lottie_autoPlay="true"
-                bind:fileName="@{viewmodel.animationFile}"
+                bind:fileName="@{viewmodel.connectionState}"
                 app:lottie_loop="true"/>
 
         <Button
@@ -35,14 +35,14 @@
                 android:layout_height="@dimen/connect_button_width"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/large_margin"
-                android:background="@drawable/btn_disconnected_bg"
+                bind:connectButtonColor="@{viewmodel.connectionState}"
                 android:gravity="center"
                 android:maxLines="1"
+                android:drawableTop="@drawable/ic_bolt"
                 android:paddingTop="40dp"
                 android:paddingBottom="40dp"
+                android:onClick="@{()->viewmodel.onConnectClick()}"
                 android:stateListAnimator="@anim/raise"
-                android:tag="test"
-                android:text="@string/connect_txt"
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/medium_font_dp"/>

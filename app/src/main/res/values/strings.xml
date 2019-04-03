@@ -5,7 +5,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dasboard">Dashboard</string>
     <string name="country">Country</string>
-    <string name="connect_txt">Connect</string>
+    <string name="txt_connect">Connect</string>
+    <string name="txt_connecting">Connecting</string>
+    <string name="txt_connected">Connected</string>
+
+
     <string name="atom_secret_key">dab9cf530d2932f1bfe5572fcaa9fa3dc7bd32fb</string>
 
 </resources>

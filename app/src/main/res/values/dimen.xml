@@ -6,7 +6,7 @@
     <dimen name="large_margin">56dp</dimen>
     <dimen name="connect_button_animation_width">300dp</dimen>
     <dimen name="connect_button_animation_height">300dp</dimen>
-    <dimen name="connect_button_width">148dp</dimen>
+    <dimen name="connect_button_width">170dp</dimen>
 
     <dimen name="medium_font_dp">16dp</dimen>
 </resources>

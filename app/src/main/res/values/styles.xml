@@ -8,7 +8,10 @@
         <item name="app_colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="app_colorAccent">@color/colorAccent</item>
         <item name="app_background">@drawable/dashboard</item>
-        <item name="connect_button_bg_color">@color/colorDisconnected</item>
+
+        <item name="connectButtonBgColor">@color/colorDisconnected</item>
+        <item name="connectingButtonBgColor">@color/colorConnecting</item>
+        <item name="connectedButtonBgColor">@color/colorConnected</item>
 
 
     </style>
