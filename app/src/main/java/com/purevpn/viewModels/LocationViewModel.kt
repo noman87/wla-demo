@@ -10,6 +10,7 @@ import org.koin.standalone.inject
 class LocationViewModel(application: Application) : BaseViewModel(application) {
 
     private val locationService: ILocationService by inject()
+
     var observableIpField = ObservableField<String>()
 
     fun getUserLocation() = backgroundScope.launch {

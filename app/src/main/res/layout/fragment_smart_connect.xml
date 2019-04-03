@@ -4,7 +4,16 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
         tools:context=".dashboard.DashboardFragment">
+
+
+    <data>
+
+        <variable
+                name="viewmodel"
+                type="com.purevpn.dashboard.DashboardViewModel"/>
+    </data>
 
     <FrameLayout
             android:layout_width="match_parent"
@@ -16,9 +25,8 @@
                 android:layout_height="@dimen/connect_button_animation_height"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/large_margin"
-
                 app:lottie_autoPlay="true"
-                app:lottie_fileName="anim/disconnected_dark.json"
+                bind:fileName="@{viewmodel.animationFile}"
                 app:lottie_loop="true"/>
 
         <Button

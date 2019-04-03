@@ -4,20 +4,8 @@ import android.app.Application
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.AndroidViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import org.koin.standalone.KoinComponent
 
-open class BaseViewModel(val app: Application) : AndroidViewModel(app),KoinComponent, Observable {
-
-    protected val uiDispatcher: CoroutineDispatcher = Dispatchers.Main
-    protected val bgDispatcher: CoroutineDispatcher = Dispatchers.IO
-
-    protected val backgroundScope = CoroutineScope(bgDispatcher)
-    protected val uiScope = CoroutineScope(uiDispatcher)
-
-
+open class ObservableViewModel(val app:Application) : AndroidViewModel(app), Observable {
 
     private val callbacks: PropertyChangeRegistry by lazy { PropertyChangeRegistry() }
 
@@ -47,5 +35,4 @@ open class BaseViewModel(val app: Application) : AndroidViewModel(app),KoinCompo
     fun notifyPropertyChanged(fieldId: Int) {
         callbacks.notifyCallbacks(this, fieldId, null)
     }
-
 }

@@ -39,6 +39,7 @@ class DashboardFragment : Fragment(), KoinComponent {
         super.onViewCreated(view, savedInstanceState)
         activity?.run {
             dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+            binding.viewmodel = dashboardViewModel
 
         }
     }

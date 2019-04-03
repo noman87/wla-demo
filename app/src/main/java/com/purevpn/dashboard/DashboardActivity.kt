@@ -15,23 +15,17 @@ class DashboardActivity : AppCompatActivity() {
         val binding: ActivityDashboardBinding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
 
         val index = Observer<Int> {
-
             binding.pager.currentItem = it
         }
 
         val viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).apply {
             binding.viewmodel = this
             binding.activityContext = this@DashboardActivity
-            binding.pager.currentItem = 0
 
-            this.currentPage.observe(this@DashboardActivity,index)
+            this.currentPage.observe(this@DashboardActivity, index)
 
 
         }
-
-
-
-
 
 
     }

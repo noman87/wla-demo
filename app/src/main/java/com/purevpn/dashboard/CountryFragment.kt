@@ -41,22 +41,23 @@ class CountryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.run {
-            dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).apply {
 
-                binding.viewModel = this
-                this.getCountries()
-                val observer = Observer<List<CountryModel>> {
-                    this.adapter.setData(list)
+            activity?.run {
+                dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).apply {
+
+                    binding.viewModel = this
+                    this.getCountries()
+                    val observer = Observer<List<CountryModel>> {
+                        this.adapter.setData(list)
+
+                    }
+                    this.list.observe(this@CountryFragment, observer)
+
 
                 }
-                this.list.observe(this@CountryFragment, observer)
 
 
             }
-
-
-        }
 
     }
 
