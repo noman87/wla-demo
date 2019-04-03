@@ -5,5 +5,6 @@ import com.purevpn.core.models.CountryModel
 
 interface ICountryService {
 
-    suspend fun getAllCountries(response:IResponse<List<CountryModel>>)
+    suspend fun getAllCountries(response: IResponse<List<CountryModel>>)
+    suspend fun insertAllCountries(listOfCountries: List<CountryModel>)
 }

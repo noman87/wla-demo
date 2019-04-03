@@ -10,8 +10,11 @@ import com.purevpn.models.QueryModel
 class CountryRepositoryImpl : BaseRepositoryImpl(), ICountryRepository {
 
     override suspend fun insertAllCountries(list: List<CountryModel>): Boolean {
-        val status = insert(list, CountryRepoModel::class.java)
-        return status
+        //val status = insertAll(list, CountryRepoModel::class.java)
+        val listType = object : TypeToken<ArrayList<CountryRepoModel>>() {}.type
+
+        insertAll(list,listType,CountryRepoModel::class.java)
+        return true
 
     }
 

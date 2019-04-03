@@ -26,17 +26,37 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
         return copyToRealmOrUpdate.isValid
     }
 
-
-    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> findAll(queryModel: QueryModel<DATA_CLASS, DATA>, type: Type): List<RESULT>? {
-        val query = getQuery(queryModel)
-        val allResult = query.findAll()
-        val realmList = realm.copyFromRealm(allResult)
-        return  ModelMapper().map(realmList, type)
+    suspend fun <T : RealmObject> insertAll(any: Any, type: Type, classOf: Class<T>): Boolean {
+        val database = getDatabase()
+        database.beginTransaction()
+        val realmObject = ModelMapper().map<ArrayList<T>>(any, type)
+        val copyToRealmOrUpdate = database.copyToRealmOrUpdate(realmObject)
+        database.commitTransaction()
+        copyToRealmOrUpdate?.apply {
+            if (!this.isEmpty())
+                return copyToRealmOrUpdate[0].isValid
+        }
+        return false
 
     }
 
 
-    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> find(queryModel: QueryModel<DATA_CLASS, DATA>,type: Type): RESULT? {
+    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> findAll(
+        queryModel: QueryModel<DATA_CLASS, DATA>,
+        type: Type
+    ): List<RESULT>? {
+        val query = getQuery(queryModel)
+        val allResult = query.findAll()
+        val realmList = realm.copyFromRealm(allResult)
+        return ModelMapper().map(realmList, type)
+
+    }
+
+
+    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> find(
+        queryModel: QueryModel<DATA_CLASS, DATA>,
+        type: Type
+    ): RESULT? {
         val query = getQuery(queryModel)
         val result = query.findFirst()
         result?.apply {

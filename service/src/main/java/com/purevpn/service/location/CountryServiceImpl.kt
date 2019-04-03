@@ -10,11 +10,17 @@ import com.purevpn.core.helper.IResponse
 import com.purevpn.core.iRepository.ICountryRepository
 import com.purevpn.core.iService.ICountryService
 import com.purevpn.core.models.CountryModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.modelmapper.ModelMapper
 
 class CountryServiceImpl : ICountryService, KoinComponent {
+    override suspend fun insertAllCountries(listOfCountries: List<CountryModel>) {
+        countryRepo.insertAllCountries(listOfCountries)
+    }
 
 
     private val countryRepo: ICountryRepository by inject()
@@ -33,6 +39,11 @@ class CountryServiceImpl : ICountryService, KoinComponent {
                     val listType = object : TypeToken<MutableList<CountryModel>>() {}.type
                     val map = ModelMapper().map<MutableList<CountryModel>>(countryList, listType)
                     map?.run {
+                        CoroutineScope(Dispatchers.IO).launch {
+
+                            insertAllCountries(this@run)
+
+                        }
                         response.success(this)
                     }
 
