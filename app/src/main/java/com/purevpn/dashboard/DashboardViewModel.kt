@@ -1,6 +1,7 @@
 package com.purevpn.dashboard
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
@@ -23,6 +24,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
 
     init {
         AtomManager.addVPNStateListener(this)
+
     }
 
     private val atomManager: AtomManager by inject()
@@ -44,7 +46,9 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
 
 
     override fun onConnected(connectionDetails: ConnectionDetails?) {
+        Log.e("Connected", "Called")
         connectionState.set(ConnectionState.CONNECTED)
+        connectionState.notifyChange()
     }
 
     override fun onDialError(p0: AtomException?, p1: ConnectionDetails?) {
@@ -53,6 +57,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
 
     override fun onDisconnected(p0: ConnectionDetails?) {
         connectionState.set(ConnectionState.DISCONNECTED)
+
     }
 
     override fun onRedialing(p0: AtomException?, p1: ConnectionDetails?) {
@@ -108,6 +113,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
     }
 
     fun onItemClick(countryObject: CountryModel) {
+        atomManager.bindIKEVStateService(getApplication())
         connectionState.set(ConnectionState.CONNECTING)
         atomManager.setVPNCredentials(VPNCredentials("purevpn0d583299", "smartdns"))
         val protocol = Protocol()

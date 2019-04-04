@@ -17,7 +17,7 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
 
     lateinit var realm: Realm
 
-    suspend fun <T : RealmObject> insert(any: Any, classOfT: Class<T>): Boolean {
+     fun <T : RealmObject> insert(any: Any, classOfT: Class<T>): Boolean {
         val database = getDatabase()
         database.beginTransaction()
         val realmObject = ModelMapper().map<Any>(any, classOfT)
@@ -26,7 +26,7 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
         return copyToRealmOrUpdate.isValid
     }
 
-    suspend fun <T : RealmObject> insertAll(any: Any, type: Type, classOf: Class<T>): Boolean {
+     fun <T : RealmObject> insertAll(any: Any, type: Type, classOf: Class<T>): Boolean {
         val database = getDatabase()
         database.beginTransaction()
         val realmObject = ModelMapper().map<ArrayList<T>>(any, type)
@@ -41,7 +41,7 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
     }
 
 
-    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> findAll(
+     fun <DATA_CLASS : RealmModel, DATA, RESULT> findAll(
         queryModel: QueryModel<DATA_CLASS, DATA>,
         type: Type
     ): List<RESULT>? {
@@ -53,7 +53,7 @@ open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
     }
 
 
-    suspend fun <DATA_CLASS : RealmModel, DATA, RESULT> find(
+     fun <DATA_CLASS : RealmModel, DATA, RESULT> find(
         queryModel: QueryModel<DATA_CLASS, DATA>,
         type: Type
     ): RESULT? {

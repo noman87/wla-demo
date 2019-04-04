@@ -3,14 +3,51 @@ package com.purevpn.dashboard
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.purevpn.core.models.CountryModel
 import com.purevpn.databinding.ItemCountryBinding
 
 
-class CountryAdapter(val dashboardViewModel: DashboardViewModel) :
-    RecyclerView.Adapter<CountryAdapter.CountryHolder>() {
+class CountryAdapter(private val dashboardViewModel: DashboardViewModel) :
+    RecyclerView.Adapter<CountryAdapter.CountryHolder>(), Filterable {
+    private var searchList: List<CountryModel>? = null
+
+    override fun getFilter(): Filter {
+
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence): Filter.FilterResults {
+                val charString = charSequence.toString()
+                if (charString.isEmpty()) {
+                    searchList = countryList.value
+                } else {
+                    val filteredList = ArrayList<CountryModel>()
+                    for (row in countryList.value!!) {
+                        if (row.name!!.toLowerCase().contains(charString.toLowerCase()) ||
+                            row.name!!.contains(charSequence)
+                        ) {
+                            filteredList.add(row)
+                        }
+                    }
+
+                    searchList = filteredList
+                }
+
+                val filterResults = Filter.FilterResults()
+                filterResults.values = searchList
+                return filterResults
+            }
+
+            override fun publishResults(charSequence: CharSequence, filterResults: Filter.FilterResults) {
+                searchList = filterResults.values as ArrayList<CountryModel>
+                notifyDataSetChanged()
+            }
+        }
+
+
+    }
 
     lateinit var context: Context
 
@@ -19,6 +56,7 @@ class CountryAdapter(val dashboardViewModel: DashboardViewModel) :
 
     fun setData(items: MutableLiveData<List<CountryModel>>) {
         countryList = items
+        searchList = items.value
         notifyDataSetChanged()
     }
 
@@ -30,14 +68,14 @@ class CountryAdapter(val dashboardViewModel: DashboardViewModel) :
     }
 
     override fun getItemCount(): Int {
-        countryList.value?.apply {
+        searchList?.apply {
             return size
         }
         return 0
     }
 
     override fun onBindViewHolder(holder: CountryHolder, position: Int) {
-        holder.bind(countryList.value!![position], context)
+        holder.bind(searchList!![position], context)
     }
 
     class CountryHolder(val binding: ItemCountryBinding, val dashboardViewModel: DashboardViewModel) :

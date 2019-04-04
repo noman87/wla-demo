@@ -5,12 +5,14 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableInt
 import androidx.viewpager.widget.ViewPager
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.tabs.TabLayout
 import com.purevpn.core.enums.ConnectionState
+import com.purevpn.dashboard.CountryAdapter
 import com.purevpn.dashboard.DashboardViewPagerAdapter
 
 
@@ -38,6 +40,26 @@ object CommonBindingUtilities {
     @BindingAdapter("bind:pager")
     fun bindTabViewToPager(tabLayout: TabLayout, viewPager: ViewPager) {
         tabLayout.setupWithViewPager(viewPager)
+    }
+
+
+    @JvmStatic
+    @BindingAdapter("bind:query")
+    fun bindQuery(searchView: SearchView, adapter: CountryAdapter) {
+        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                return false
+            }
+
+        })
+
+
     }
 
 

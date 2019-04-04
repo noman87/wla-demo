@@ -11,5 +11,6 @@
 
 
     <string name="atom_secret_key">dab9cf530d2932f1bfe5572fcaa9fa3dc7bd32fb</string>
+    <string name="search_hint">Search</string>
 
 </resources>
