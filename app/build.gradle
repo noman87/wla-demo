@@ -81,4 +81,5 @@ dependencies {
     implementation project(':network')
     implementation 'com.google.android.material:material:1.0.0'
     implementation project(':AtomSdk')
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 }

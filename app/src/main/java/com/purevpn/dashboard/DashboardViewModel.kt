@@ -2,6 +2,7 @@ package com.purevpn.dashboard
 
 import android.app.Application
 import android.util.Log
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
@@ -21,11 +22,6 @@ import org.modelmapper.ModelMapper
 
 class DashboardViewModel(application: Application) : BaseViewModel(application), VPNStateListener {
 
-
-    init {
-        AtomManager.addVPNStateListener(this)
-
-    }
 
     private val atomManager: AtomManager by inject()
     override fun onConnected() {
@@ -82,18 +78,33 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
     val animationFile = ObservableField<String>("anim/disconnected.json")
     val connectionState = ObservableField<ConnectionState>(ConnectionState.DISCONNECTED)
 
+    var progressbarVisibility = ObservableBoolean(true)
+
 
     var adapter = CountryAdapter(this)
     var currentPage: MutableLiveData<Int> = MutableLiveData()
     var list: MutableLiveData<List<CountryModel>> = MutableLiveData()
 
 
+
+
+    fun registerCallbacks(){
+        AtomManager.addVPNStateListener(this)
+        atomManager.bindIKEVStateService(getApplication())
+    }
+
+    fun unregisterCallback(){
+        AtomManager.removeVPNStateListener(this)
+        atomManager.unBindIKEVStateService(getApplication())
+
+    }
     fun getCountries() = backgroundScope.launch {
 
         countryService.getAllCountries(object : IResponse<List<CountryModel>> {
             override fun <T> success(data: T) {
                 val countryList = data as List<CountryModel>
                 list.postValue(countryList)
+                progressbarVisibility.set(false)
             }
 
 
@@ -113,7 +124,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
     }
 
     fun onItemClick(countryObject: CountryModel) {
-        atomManager.bindIKEVStateService(getApplication())
+
         connectionState.set(ConnectionState.CONNECTING)
         atomManager.setVPNCredentials(VPNCredentials("purevpn0d583299", "smartdns"))
         val protocol = Protocol()

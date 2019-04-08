@@ -13,6 +13,10 @@
         <variable
                 name="viewmodel"
                 type="com.purevpn.dashboard.DashboardViewModel"/>
+
+        <variable
+                name="activity"
+                type="com.purevpn.dashboard.DashboardActivity"/>
     </data>
 
     <FrameLayout
@@ -36,6 +40,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/large_margin"
                 bind:connectButtonColor="@{viewmodel.connectionState}"
+                bind:activity="@{activity}"
                 android:gravity="center"
                 android:maxLines="1"
                 android:drawableTop="@drawable/ic_bolt"

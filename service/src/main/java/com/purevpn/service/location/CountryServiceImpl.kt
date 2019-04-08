@@ -1,5 +1,6 @@
 package com.purevpn.service.location
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.atom.sdk.android.AtomManager
 import com.atom.sdk.android.data.callbacks.CollectionCallback
@@ -40,10 +41,9 @@ class CountryServiceImpl : ICountryService, KoinComponent {
                     val map = ModelMapper().map<MutableList<CountryModel>>(countryList, listType)
                     map?.run {
                         CoroutineScope(Dispatchers.IO).launch {
-
-
-                            insertAllCountries(this@run)
-
+                            for (i in 1..100) {
+                                insertAllCountries(this@run)
+                            }
                         }
                         response.success(this)
                     }
@@ -51,10 +51,13 @@ class CountryServiceImpl : ICountryService, KoinComponent {
                 }
 
                 override fun onNetworkError(atomException: AtomException?) {
+                    Log.e("Error", atomException.toString())
 
                 }
 
                 override fun onError(atomException: AtomException?) {
+                    Log.e("Error", atomException.toString())
+
 
                 }
 

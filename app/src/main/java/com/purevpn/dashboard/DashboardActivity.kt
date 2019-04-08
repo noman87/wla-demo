@@ -10,24 +10,31 @@ import com.purevpn.databinding.ActivityDashboardBinding
 
 class DashboardActivity : AppCompatActivity() {
 
+    lateinit var dashboardViewModel: DashboardViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityDashboardBinding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
+
 
         val index = Observer<Int> {
             binding.pager.currentItem = it
         }
 
-        val viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).apply {
+        dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).apply {
+            registerCallbacks()
             binding.viewmodel = this
             binding.activityContext = this@DashboardActivity
-
             this.currentPage.observe(this@DashboardActivity, index)
 
 
         }
 
 
+    }
+
+    override fun onDestroy() {
+        dashboardViewModel.unregisterCallback()
+        super.onDestroy()
     }
 
 

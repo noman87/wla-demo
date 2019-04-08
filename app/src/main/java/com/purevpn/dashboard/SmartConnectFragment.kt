@@ -40,6 +40,7 @@ class DashboardFragment : Fragment(), KoinComponent {
         activity?.run {
             dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
             binding.viewmodel = dashboardViewModel
+            binding.activity = this as DashboardActivity
 
         }
     }

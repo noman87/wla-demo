@@ -4,15 +4,18 @@ import android.content.Context
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.BindingAdapter
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.viewpager.widget.ViewPager
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.tabs.TabLayout
 import com.purevpn.core.enums.ConnectionState
 import com.purevpn.dashboard.CountryAdapter
+import com.purevpn.dashboard.DashboardActivity
 import com.purevpn.dashboard.DashboardViewPagerAdapter
 
 
@@ -46,7 +49,7 @@ object CommonBindingUtilities {
     @JvmStatic
     @BindingAdapter("bind:query")
     fun bindQuery(searchView: SearchView, adapter: CountryAdapter) {
-        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 adapter.filter.filter(newText)
                 return false
@@ -96,27 +99,39 @@ object CommonBindingUtilities {
     }
 
     @JvmStatic
-    @BindingAdapter("bind:connectButtonColor")
-    fun bindConnectButtonColor(button: Button, connectionState: ConnectionState) {
-        when (connectionState) {
-            ConnectionState.CONNECTED -> {
-                button.setBackgroundResource(R.drawable.btn_connected_bg)
-                button.setText(R.string.txt_connected)
+    @BindingAdapter("bind:connectButtonColor", "bind:activity")
+    fun bindConnectButtonColor(button: Button, connectionState: ConnectionState, activity: DashboardActivity) {
+        activity.runOnUiThread {
+            when (connectionState) {
+                ConnectionState.CONNECTED -> {
+                    button.setBackgroundResource(R.drawable.btn_connected_bg)
+                    button.setText(R.string.txt_connected)
 
-            }
+                }
 
-            ConnectionState.CONNECTING -> {
-                button.setBackgroundResource(R.drawable.btn_connecting_bg)
-                button.setText(R.string.txt_connecting)
+                ConnectionState.CONNECTING -> {
+                    button.setBackgroundResource(R.drawable.btn_connecting_bg)
+                    button.setText(R.string.txt_connecting)
 
-            }
-            ConnectionState.DISCONNECTED -> {
-                button.setBackgroundResource(R.drawable.btn_disconnected_bg)
-                button.setText(R.string.txt_connect)
+                }
+                ConnectionState.DISCONNECTED -> {
+                    button.setBackgroundResource(R.drawable.btn_disconnected_bg)
+                    button.setText(R.string.txt_connect)
 
+                }
             }
         }
 
+
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:progressVisibility")
+    fun bindProgressVisibility(progressBar: ProgressBar, visibility: ObservableBoolean) {
+        if (visibility.get())
+            progressBar.visibility = View.VISIBLE
+        else
+            progressBar.visibility = View.GONE
     }
 
 
