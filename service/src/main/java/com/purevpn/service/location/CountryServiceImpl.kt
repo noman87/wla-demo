@@ -41,9 +41,8 @@ class CountryServiceImpl : ICountryService, KoinComponent {
                     map?.run {
                         CoroutineScope(Dispatchers.IO).launch {
 
-                            for(i in 1..1000) {
-                                insertAllCountries(this@run)
-                            }
+
+                            insertAllCountries(this@run)
 
                         }
                         response.success(this)
