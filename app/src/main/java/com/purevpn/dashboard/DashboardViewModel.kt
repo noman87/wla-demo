@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import androidx.lifecycle.MutableLiveData
 import com.atom.sdk.android.*
 import com.atom.sdk.android.data.model.countries.Country
 import com.atom.sdk.android.data.model.protocol.Protocol
@@ -82,7 +81,6 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
 
 
     var adapter = CountryAdapter(this)
-    var currentPage: MutableLiveData<Int> = MutableLiveData()
     var countryObservableList: ObservableField<List<CountryModel>> = ObservableField()
 
 
