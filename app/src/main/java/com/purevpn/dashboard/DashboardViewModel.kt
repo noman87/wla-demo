@@ -83,27 +83,26 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
 
     var adapter = CountryAdapter(this)
     var currentPage: MutableLiveData<Int> = MutableLiveData()
-    var list: MutableLiveData<List<CountryModel>> = MutableLiveData()
+    var countryObservableList: ObservableField<List<CountryModel>> = ObservableField()
 
 
-
-
-    fun registerCallbacks(){
+    fun registerCallbacks() {
         AtomManager.addVPNStateListener(this)
         atomManager.bindIKEVStateService(getApplication())
     }
 
-    fun unregisterCallback(){
+    fun unregisterCallback() {
         AtomManager.removeVPNStateListener(this)
         atomManager.unBindIKEVStateService(getApplication())
 
     }
+
     fun getCountries() = backgroundScope.launch {
 
         countryService.getAllCountries(object : IResponse<List<CountryModel>> {
             override fun <T> success(data: T) {
                 val countryList = data as List<CountryModel>
-                list.postValue(countryList)
+                countryObservableList.set(countryList)
                 progressbarVisibility.set(false)
             }
 

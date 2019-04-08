@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.purevpn.core.models.CountryModel
 import com.purevpn.databinding.ItemCountryBinding
@@ -21,10 +20,10 @@ class CountryAdapter(private val dashboardViewModel: DashboardViewModel) :
             override fun performFiltering(charSequence: CharSequence): Filter.FilterResults {
                 val charString = charSequence.toString()
                 if (charString.isEmpty()) {
-                    searchList = countryList.value
+                    searchList = countryList
                 } else {
                     val filteredList = ArrayList<CountryModel>()
-                    for (row in countryList.value!!) {
+                    for (row in countryList) {
                         if (row.name!!.toLowerCase().contains(charString.toLowerCase()) ||
                             row.name!!.contains(charSequence)
                         ) {
@@ -51,12 +50,12 @@ class CountryAdapter(private val dashboardViewModel: DashboardViewModel) :
 
     lateinit var context: Context
 
-    private var countryList: MutableLiveData<List<CountryModel>> = MutableLiveData()
+    private var countryList: List<CountryModel> = ArrayList()
 
 
-    fun setData(items: MutableLiveData<List<CountryModel>>) {
+    fun setData(items: List<CountryModel>) {
         countryList = items
-        searchList = items.value
+        searchList = items
         notifyDataSetChanged()
     }
 

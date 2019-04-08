@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.purevpn.R
-import com.purevpn.core.models.CountryModel
 import com.purevpn.databinding.FragmentCountryBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,25 +39,14 @@ class CountryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-            activity?.run {
-                dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).apply {
-
-                    binding.viewModel = this
-                    this.getCountries()
-                    val observer = Observer<List<CountryModel>> {
-                        this.adapter.setData(list)
-
-                    }
-                    this.list.observe(this@CountryFragment, observer)
-
-
-                }
+        activity?.run {
+            dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).apply {
+                binding.viewModel = this
+                getCountries()
             }
+        }
 
     }
-
-
 
 
 }

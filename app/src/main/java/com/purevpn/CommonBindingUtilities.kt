@@ -9,11 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.tabs.TabLayout
 import com.purevpn.core.enums.ConnectionState
+import com.purevpn.core.models.CountryModel
 import com.purevpn.dashboard.CountryAdapter
 import com.purevpn.dashboard.DashboardActivity
 import com.purevpn.dashboard.DashboardViewPagerAdapter
@@ -132,6 +135,19 @@ object CommonBindingUtilities {
             progressBar.visibility = View.VISIBLE
         else
             progressBar.visibility = View.GONE
+    }
+
+
+    @JvmStatic
+    @BindingAdapter("bind:list_data")
+    fun bindData(
+        recyclerView: RecyclerView,
+        list: ObservableField<List<CountryModel>>
+    ) {
+        list.get()?.let {
+            val adapter = recyclerView.adapter as CountryAdapter
+            adapter.setData(it)
+        }
     }
 
 
