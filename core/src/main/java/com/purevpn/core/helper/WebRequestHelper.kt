@@ -1,7 +1,7 @@
 package com.purevpn.core.helper
 
 import com.purevpn.core.errors.Errors
-import com.purevpn.core.exceptions.AppException
+import com.purevpn.core.exceptions.ApiException
 import com.purevpn.core.iNetwork.INetworkApi
 import com.purevpn.core.models.Result
 import okhttp3.ResponseBody
@@ -24,7 +24,7 @@ class WebRequestHelper : KoinComponent {
             Result.Success(await)
         } catch (ex: Exception) {
             val exception =
-                AppException.makeApiException(Errors._1003, Errors.getErrorMessage(Errors._1003), ex)
+                ApiException(Errors._1003, Errors.getErrorMessage(Errors._1003), ex)
             Result.Error(exception)
         }
     }

@@ -1,7 +1,5 @@
 package com.purevpn.core.exceptions
 
-open class BaseException : Exception() {
-    var errorCode: Int = 0
-    var errorMessage: String? = null
-    var exception: Exception? = null
+open class BaseException(var errorCode: Int, var errorMessage: String, var ex: Exception) : Exception() {
+
 }

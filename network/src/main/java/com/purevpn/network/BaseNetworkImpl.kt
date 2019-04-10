@@ -1,7 +1,7 @@
 package com.purevpn.network
 
 import com.purevpn.core.errors.Errors
-import com.purevpn.core.exceptions.AppException
+import com.purevpn.core.exceptions.ApiException
 import com.purevpn.core.helper.Utilities
 import com.purevpn.core.helper.WebRequestHelper
 import com.purevpn.core.iNetwork.IBaseNetwork
@@ -32,21 +32,51 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
                 httpResponse.data.apply {
                     setHttpApiProperties(this)
                     sendApiEvent(this)
-                    body()?.string()?.let {
-                        val mapObject = Utilities.mapModel(type, it, parameterizedType)
-                        return when (mapObject) {
-                            is Result.Success -> {
-                                Result.Success(mapObject.data)
+                    when (code()) {
+                        200 -> {
+                            //Http status code is 200
+                            val response: String? = body()?.string()
+                            if (response != null) {
+                                response.let {
+                                    val mapObject = Utilities.mapModel(type, it, parameterizedType)
+                                    return when (mapObject) {
+                                        is Result.Success -> {
+                                            Result.Success(mapObject.data)
 
-                            }
-                            is Result.Error -> {
-
-                                val exception =
-                                    AppException.makeApiException(Errors._1001, Errors.getErrorMessage(Errors._1001), mapObject.exception)
+                                        }
+                                        is Result.Error -> {
+                                            val exception = ApiException(
+                                                Errors._1001,
+                                                Errors.getErrorMessage(Errors._1001),
+                                                mapObject.exception
+                                            )
+                                            Result.Error(exception)
+                                        }
+                                    }
+                                }
+                            } else {
+                                val exception = ApiException(
+                                    Errors._1001,
+                                    Errors.getErrorMessage(Errors._1001),
+                                    Exception(Errors.getErrorMessage(Errors._1001))
+                                )
                                 Result.Error(exception)
                             }
+
+
+                        }
+                        else -> {
+                            //Http status code other than 200
+                            val exception = ApiException(
+                                Errors._1004,
+                                Errors.getErrorMessage(Errors._1004),
+                                Exception(Errors.getErrorMessage(Errors._1004))
+                            )
+                            Result.Error(exception)
+
                         }
                     }
+
                 }
 
             }
@@ -57,7 +87,7 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
         }
 
         val exception =
-            AppException.makeApiException(Errors._1001, Errors.getErrorMessage(Errors._1001), Exception())
+            ApiException(Errors._1001, Errors.getErrorMessage(Errors._1001), Exception())
         return Result.Error(exception)
     }
 

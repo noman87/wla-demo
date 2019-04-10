@@ -1,28 +1,7 @@
 package com.purevpn.core.exceptions
 
-open class AppException : BaseException() {
+open class AppException(errorCode: Int, errorMessage: String, ex: Exception) :
+    BaseException(errorCode, errorMessage, ex) {
     var apiException: ApiException? = null
-
-
-    companion object {
-
-        fun makeApiException(errorCode: Int, errorMessage: String, exception: Exception): AppException {
-            val appException = AppException()
-            appException
-                .apply {
-                    val apiException = ApiException().apply {
-                        this.errorCode = errorCode
-                        this.errorMessage = errorMessage
-                        this.exception = exception
-                    }
-
-                    this.apiException = apiException
-                }
-
-
-            return appException
-        }
-    }
-
-
+    var repoException: RepoException? = null
 }
