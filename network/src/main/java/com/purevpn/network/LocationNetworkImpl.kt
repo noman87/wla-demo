@@ -5,6 +5,7 @@ import com.purevpn.core.helper.Constants
 import com.purevpn.core.iNetwork.ILocationNetwork
 import com.purevpn.core.models.ApiEnvelope
 import com.purevpn.core.models.LocationModel
+import com.purevpn.core.models.Result
 import com.squareup.moshi.Types
 
 class LocationNetworkImpl : BaseNetworkImpl(), ILocationNetwork {
@@ -14,22 +15,23 @@ class LocationNetworkImpl : BaseNetworkImpl(), ILocationNetwork {
         get() = Constants.SUCCESS_CODE_ONE
 
 
-    override suspend fun getLocation(params: HashMap<String, String>): LocationModel? {
+    override suspend fun getLocation(params: HashMap<String, String>): Result<LocationModel> {
         val headers = HashMap<String, String>()
         headers[Constants.X_PSK_KEY] = Constants.X_PSK_KEY_VALUE
         val parameterizedType = Types.newParameterizedType(ApiEnvelope::class.java, LocationModel::class.java)
         val response = get(ApiUrls.IP_2_LOCATION, params, headers, ApiEnvelope<LocationModel>(), parameterizedType)
-
-
-        response?.run {
-            return body?.apply {
-                header?.let {
-                    this.code = it.code
-                    this.message = it.message
+        return when (response) {
+            is Result.Success -> {
+                Result.Success(response.data.body!!).also {
+                    it.data.code = response.data.header?.code!!
                 }
             }
+            is Result.Error -> {
+                val exception = response.exception
+                return Result.Error(exception)
+            }
+
         }
-        return null
     }
 
 }

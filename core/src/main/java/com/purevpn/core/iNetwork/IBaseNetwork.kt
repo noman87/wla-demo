@@ -1,7 +1,6 @@
 package com.purevpn.core.iNetwork
 
 import com.purevpn.core.models.Result
-import java.io.IOException
 import java.lang.reflect.ParameterizedType
 
 interface IBaseNetwork {
@@ -16,13 +15,19 @@ interface IBaseNetwork {
     var apiHttpResponseCode: Int
 
 
-    suspend fun <T> get(url: String, params: HashMap<String, String>, headers: HashMap<String, String>, type: T, parameterizedType: ParameterizedType): T?
+    suspend fun <T> get(
+        url: String,
+        params: HashMap<String, String>,
+        headers: HashMap<String, String>,
+        type: T,
+        parameterizedType: ParameterizedType
+    ): Result<T>
 
 
-    suspend fun <T : Any?> safeApiCall(call: suspend () -> Result<T>, errorMessage: String): Result<T> = try {
+    /*suspend fun <T : Any?> safeApiCall(call: suspend () -> Result<T>, errorMessage: String): Result<T> = try {
         call.invoke()
     } catch (e: Exception) {
-        Result.Error(IOException(errorMessage, e))
-    }
+        Result.Error(java.lang.Exception())
+    }*/
 
 }
