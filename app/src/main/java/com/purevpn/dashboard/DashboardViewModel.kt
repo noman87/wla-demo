@@ -1,14 +1,15 @@
 package com.purevpn.dashboard
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import com.atom.sdk.android.*
+import com.atom.sdk.android.AtomManager
+import com.atom.sdk.android.VPNCredentials
+import com.atom.sdk.android.VPNProperties
+import com.atom.sdk.android.VPNStateListener
 import com.atom.sdk.android.data.model.countries.Country
 import com.atom.sdk.android.data.model.protocol.Protocol
-import com.atom.sdk.android.exceptions.AtomException
 import com.purevpn.BaseViewModel
 import com.purevpn.core.enums.ConnectionState
 import com.purevpn.core.helper.IResponse
@@ -22,54 +23,6 @@ import org.modelmapper.ModelMapper
 class DashboardViewModel(application: Application) : BaseViewModel(application), VPNStateListener {
 
 
-    private val atomManager: AtomManager by inject()
-    override fun onConnected() {
-
-    }
-
-    override fun onDisconnected(p0: Boolean) {
-
-    }
-
-    override fun onConnecting() {
-
-    }
-
-    override fun onPacketsTransmitted(p0: String?, p1: String?) {
-
-    }
-
-
-    override fun onConnected(connectionDetails: ConnectionDetails?) {
-        Log.e("Connected", "Called")
-        connectionState.set(ConnectionState.CONNECTED)
-        connectionState.notifyChange()
-    }
-
-    override fun onDialError(p0: AtomException?, p1: ConnectionDetails?) {
-
-    }
-
-    override fun onDisconnected(p0: ConnectionDetails?) {
-        connectionState.set(ConnectionState.DISCONNECTED)
-
-    }
-
-    override fun onRedialing(p0: AtomException?, p1: ConnectionDetails?) {
-
-    }
-
-    override fun onStateChange(states: String?) {
-
-        val currentVpnStatus = atomManager.getCurrentVpnStatus(getApplication())
-
-        if (currentVpnStatus == "CONNECTING") {
-            connectionState.set(ConnectionState.CONNECTING)
-        }
-
-    }
-
-
     private val countryService: ICountryService by inject()
 
 
@@ -80,20 +33,18 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
     var progressbarVisibility = ObservableBoolean(true)
 
 
+
     var adapter = CountryAdapter(this)
     var countryObservableList: ObservableField<List<CountryModel>> = ObservableField()
 
 
-    fun registerCallbacks() {
-        AtomManager.addVPNStateListener(this)
-        atomManager.bindIKEVStateService(getApplication())
+    fun init() {
+        registerCallbacks()
+        var subscribe = connectionStateObservable.subscribe {
+            connectionState.set(it)
+        }
     }
 
-    fun unregisterCallback() {
-        AtomManager.removeVPNStateListener(this)
-        atomManager.unBindIKEVStateService(getApplication())
-
-    }
 
     fun getCountries() = backgroundScope.launch {
 
@@ -127,8 +78,8 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
         val protocol = Protocol()
 
         protocol.apply {
-            name = "UDP"
-            number = 9
+            name = "IKEV"
+            number = 3
             isMultiport = false
         }
 
@@ -140,6 +91,10 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
         animationFile.set("anim/connecting.json")
 
 
+    }
+
+    override fun onCleared() {
+        super.onCleared()
     }
 
 

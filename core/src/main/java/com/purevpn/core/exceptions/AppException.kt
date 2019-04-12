@@ -1,7 +1,13 @@
 package com.purevpn.core.exceptions
 
-open class AppException(errorCode: Int, errorMessage: String, ex: Exception) :
-    BaseException(errorCode, errorMessage, ex) {
+import com.purevpn.core.errors.Errors.Companion.getApplicationErrorMessage
+
+open class AppException(var errorCode: Int, var exception: Exception?) : Exception() {
+
+    override val message: String?
+        get() = getApplicationErrorMessage(errorCode)
+
     var apiException: ApiException? = null
     var repoException: RepoException? = null
+
 }

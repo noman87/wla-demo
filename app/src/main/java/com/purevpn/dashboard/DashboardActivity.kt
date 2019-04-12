@@ -18,9 +18,9 @@ class DashboardActivity : AppCompatActivity() {
 
 
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java).apply {
-            registerCallbacks()
             binding.viewmodel = this
             binding.activityContext = this@DashboardActivity
+            init()
 
         }
 
@@ -28,7 +28,6 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        dashboardViewModel.unregisterCallback()
         super.onDestroy()
     }
 

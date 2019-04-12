@@ -77,6 +77,7 @@ class AppController : Application() {
 
     }
 
+
     private fun initAtomSdk() {
         val build = AtomConfiguration.Builder(getString(R.string.atom_secret_key)).build()
         build?.run {

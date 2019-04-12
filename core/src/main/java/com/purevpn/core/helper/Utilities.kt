@@ -17,13 +17,13 @@ object Utilities {
                 Result.Success(fromJson)
             } else {
                 val exception =
-                    ApiException(Errors._1001, Errors.getErrorMessage(Errors._1001), Exception())
+                    ApiException(Errors.ApiErrorCodes._1001, null)
                 Result.Error(exception)
             }
 
         } catch (e: Exception) {
             val exception =
-                ApiException(Errors._1001, Errors.getErrorMessage(Errors._1001), e)
+                ApiException(Errors.ApiErrorCodes._1001, e)
             Result.Error(exception)
         }
 

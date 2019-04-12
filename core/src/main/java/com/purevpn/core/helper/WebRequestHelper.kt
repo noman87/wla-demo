@@ -24,7 +24,7 @@ class WebRequestHelper : KoinComponent {
             Result.Success(await)
         } catch (ex: Exception) {
             val exception =
-                ApiException(Errors._1003, Errors.getErrorMessage(Errors._1003), ex)
+                ApiException(Errors.ApiErrorCodes._1001, ex)
             Result.Error(exception)
         }
     }

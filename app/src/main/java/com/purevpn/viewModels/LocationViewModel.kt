@@ -26,6 +26,7 @@ class LocationViewModel(application: Application) : BaseViewModel(application) {
                 is Result.Error -> {
                     val exception = userIpLocation.exception as AppException
                     Log.e("Exception", exception.errorCode.toString())
+                    Log.e("Exception", exception.message)
                 }
             }
         }

@@ -31,9 +31,11 @@ class LocationServiceImpl :
                         Result.Success(this)
                     }
                     else -> {
-                        val exception = ApiException(Errors._1004, Errors.getErrorMessage(Errors._1004), Exception())
+                        val apiException = ApiException(Errors.ApiErrorCodes._1001, null)
                         val appException =
-                            AppException(exception.errorCode, getErrorMessage(exception.errorCode), exception.ex)
+                            AppException(Errors.AppErrorCodes._2001, null).also {
+                                it.apiException = apiException
+                            }
                         Result.Error(appException)
                     }
                 }
@@ -41,14 +43,12 @@ class LocationServiceImpl :
 
             }
             is Result.Error -> {
-                val apiException = location.exception as ApiException
+                val apiException = location.exception
                 val appException =
                     AppException(
-                        apiException.errorCode,
-                        getErrorMessage(apiException.errorCode),
-                        apiException.ex
+                        Errors.AppErrorCodes._2002, null
                     ).also {
-                        it.apiException = apiException
+                        it.apiException = apiException as ApiException
                     }
 
                 return Result.Error(appException)

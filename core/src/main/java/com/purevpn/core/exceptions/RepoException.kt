@@ -1,4 +1,11 @@
 package com.purevpn.core.exceptions
 
-class RepoException(errorCode: Int, errorMessage: String, ex: Exception) : BaseException(errorCode, errorMessage, ex) {
+import com.purevpn.core.errors.Errors
+
+class RepoException(var errorCode: Int, var exception: Exception?) : Exception() {
+
+    override val message: String?
+        get() = Errors.getApiErrorMessage(errorCode)
+
+
 }

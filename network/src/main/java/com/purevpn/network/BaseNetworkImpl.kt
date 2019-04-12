@@ -46,8 +46,7 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
                                         }
                                         is Result.Error -> {
                                             val exception = ApiException(
-                                                Errors._1001,
-                                                Errors.getErrorMessage(Errors._1001),
+                                                Errors.ApiErrorCodes._1001,
                                                 mapObject.exception
                                             )
                                             Result.Error(exception)
@@ -56,9 +55,7 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
                                 }
                             } else {
                                 val exception = ApiException(
-                                    Errors._1001,
-                                    Errors.getErrorMessage(Errors._1001),
-                                    Exception(Errors.getErrorMessage(Errors._1001))
+                                    Errors.ApiErrorCodes._1001, null
                                 )
                                 Result.Error(exception)
                             }
@@ -68,9 +65,7 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
                         else -> {
                             //Http status code other than 200
                             val exception = ApiException(
-                                Errors._1004,
-                                Errors.getErrorMessage(Errors._1004),
-                                Exception(Errors.getErrorMessage(Errors._1004))
+                                Errors.ApiErrorCodes._1004, null
                             )
                             Result.Error(exception)
 
@@ -87,7 +82,7 @@ open class BaseNetworkImpl : IBaseNetwork, KoinComponent {
         }
 
         val exception =
-            ApiException(Errors._1001, Errors.getErrorMessage(Errors._1001), Exception())
+            ApiException(Errors.ApiErrorCodes._1001, null)
         return Result.Error(exception)
     }
 
