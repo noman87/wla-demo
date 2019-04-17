@@ -4,13 +4,15 @@ import android.app.Application
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import androidx.fragment.app.Fragment
 import com.atom.sdk.android.AtomManager
 import com.atom.sdk.android.VPNCredentials
 import com.atom.sdk.android.VPNProperties
-import com.atom.sdk.android.VPNStateListener
 import com.atom.sdk.android.data.model.countries.Country
 import com.atom.sdk.android.data.model.protocol.Protocol
+import com.purevpn.AppController
 import com.purevpn.BaseViewModel
+import com.purevpn.R
 import com.purevpn.core.enums.ConnectionState
 import com.purevpn.core.helper.IResponse
 import com.purevpn.core.iService.ICountryService
@@ -20,27 +22,29 @@ import org.koin.standalone.inject
 import org.modelmapper.ModelMapper
 
 
-class DashboardViewModel(application: Application) : BaseViewModel(application), VPNStateListener {
+class DashboardViewModel(application: Application) : BaseViewModel(application) {
 
 
     private val countryService: ICountryService by inject()
 
 
-    val index = ObservableInt(0)
     val animationFile = ObservableField<String>("anim/disconnected.json")
     val connectionState = ObservableField<ConnectionState>(ConnectionState.DISCONNECTED)
 
     var progressbarVisibility = ObservableBoolean(true)
 
 
-
     var adapter = CountryAdapter(this)
     var countryObservableList: ObservableField<List<CountryModel>> = ObservableField()
 
+    var fragments: List<Fragment> = listOf(DashboardFragment(), CountryFragment())
+    var fragmentsName: List<String> = listOf(app.getString(R.string.dasboard), app.getString(R.string.country))
+
+
+    val index = ObservableInt(fragmentsName.indexOf(app.getString(R.string.dasboard)))
 
     fun init() {
-        registerCallbacks()
-        var subscribe = connectionStateObservable.subscribe {
+        var subscribe = AppController.getInstance().connectionStateObservable.subscribe {
             connectionState.set(it)
         }
     }
@@ -68,7 +72,6 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
             atomManager.disconnect(getApplication())
 
         }
-
     }
 
     fun onItemClick(countryObject: CountryModel) {
@@ -78,15 +81,15 @@ class DashboardViewModel(application: Application) : BaseViewModel(application),
         val protocol = Protocol()
 
         protocol.apply {
-            name = "IKEV"
-            number = 3
+            name = "UDP"
+            number = 9
             isMultiport = false
         }
 
         val country = ModelMapper().map(countryObject, Country::class.java)
         val builder = VPNProperties.Builder(country, protocol).withSmartDialing().build()
         atomManager.connect(getApplication(), builder)
-        index.set(0)
+        index.set(fragmentsName.indexOf(app.getString(R.string.dasboard)))
         index.notifyChange()
         animationFile.set("anim/connecting.json")
 

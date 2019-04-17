@@ -19,14 +19,15 @@ import com.purevpn.core.enums.ConnectionState
 import com.purevpn.core.models.CountryModel
 import com.purevpn.dashboard.CountryAdapter
 import com.purevpn.dashboard.DashboardActivity
+import com.purevpn.dashboard.DashboardViewModel
 import com.purevpn.dashboard.DashboardViewPagerAdapter
 
 
 object CommonBindingUtilities {
     @JvmStatic
-    @BindingAdapter("bind:pagerAdapter")
-    fun bindViewPagerAdapter(viewPager: ViewPager, activity: AppCompatActivity) {
-        viewPager.adapter = DashboardViewPagerAdapter(activity, activity.supportFragmentManager)
+    @BindingAdapter("bind:pagerAdapter", "bind:viewModel")
+    fun bindViewPagerAdapter(viewPager: ViewPager, activity: AppCompatActivity, viewModel: DashboardViewModel) {
+        viewPager.adapter = DashboardViewPagerAdapter(viewModel, activity.supportFragmentManager)
 
 
     }

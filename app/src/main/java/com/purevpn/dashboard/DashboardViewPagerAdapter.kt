@@ -1,15 +1,11 @@
 package com.purevpn.dashboard
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.purevpn.R
 
-class DashboardViewPagerAdapter(private val context: Context, fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
-
-    var fragments: List<Fragment> = listOf(DashboardFragment(), CountryFragment())
-    var fragmentsName: List<String> = listOf(context.getString(R.string.dasboard), context.getString(R.string.country))
+class DashboardViewPagerAdapter(val viewModel: DashboardViewModel, fragmentManager: FragmentManager) :
+    FragmentPagerAdapter(fragmentManager) {
 
 
     override fun getCount(): Int {
@@ -18,10 +14,10 @@ class DashboardViewPagerAdapter(private val context: Context, fragmentManager: F
     }
 
     override fun getItem(position: Int): Fragment {
-        return fragments[position]
+        return viewModel.fragments[position]
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return fragmentsName[position]
+        return viewModel.fragmentsName[position]
     }
 }
