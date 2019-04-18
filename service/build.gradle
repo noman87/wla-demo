@@ -28,8 +28,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':repository')
-    implementation project(':network')
     implementation project(':core')
     testImplementation TestDependencies.junit
     androidTestImplementation TestDependencies.androidxRunner

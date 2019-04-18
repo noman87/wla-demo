@@ -19,7 +19,15 @@ ext {
     koinAndroidArch = '1.0.0-alpha-12'
     androidViewPagerVersion = '1.0.0'
     lottieVersion = '2.5.1'
-
+    moshiVersion = '2.3.0'
+    gsonVersion = '2.8.5'
+    moshiKotlinVersion = '1.8.0'
+    modelMapperVersion = '2.3.0'
+    rxJavaVersion = '2.2.6'
+    navVersion = '2.0.0-rc02'
+    googleMaterailVesion = '1.0.0'
+    recycleViewVersion = '1.0.0'
+    legacySupportVersion = '1.0.0-beta01'
 
     TestDependencies = [
             junit         : "junit:junit:${junitVersion}",
@@ -48,12 +56,8 @@ ext {
 
 
 
-
-
-
-            room                   : "androidx.room:room-coroutines:${room}",
             retrofit               : "com.squareup.retrofit2:retrofit:${retrofit}",
-            moshi                  : "com.squareup.retrofit2:converter-moshi:${retrofit}",
+            moshi                  : "com.squareup.retrofit2:converter-moshi:${moshiVersion}",
             coroutinesAdapte       : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${coroutinesAdapter}",
 
             //dagger
@@ -64,8 +68,22 @@ ext {
             daggerAndroidAnnotation: "com.google.dagger:dagger-android-processor:$daggerVersion",
 
             androidViewPager       : "androidx.viewpager:viewpager:$androidViewPagerVersion",
-            
-            lotttie                : "com.airbnb.android:lottie:$lottieVersion"
+
+            lotttie                : "com.airbnb.android:lottie:$lottieVersion",
+            gson                   : "com.google.code.gson:gson:$gsonVersion",
+
+            moshikotlin            : "com.squareup.moshi:moshi-kotlin:$moshiKotlinVersion",
+            modelMapper            : "org.modelmapper:modelmapper:$modelMapperVersion",
+
+            rxjava                 : "io.reactivex.rxjava2:rxjava:$rxJavaVersion",
+
+            navigationFragment     : "androidx.navigation:navigation-fragment-ktx:$navVersion",
+            navigationUi           : "androidx.navigation:navigation-ui-ktx:$navVersion",
+            googleMaterial         : "com.google.android.material:material:$googleMaterailVesion",
+
+            recycleview            : "androidx.recyclerview:recyclerview:$recycleViewVersion",
+
+            legacySupport: "androidx.legacy:legacy-support-v4:$legacySupportVersion",
 
 
     ]

@@ -59,27 +59,37 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+
+    implementation Dependencies.legacySupport
+    implementation Dependencies.appcompat
+    implementation Dependencies.constraintLayout
+
+
+    // For Kotlin use navigation-fragment-ktx
+    implementation Dependencies.navigationFragment
+    // For Kotlin use navigation-ui-ktx
+    implementation Dependencies.navigationUi
+    implementation Dependencies.androidViewPager
+    implementation Dependencies.lotttie
+    implementation Dependencies.googleMaterial
+    implementation Dependencies.recycleview
+
+    
+
     kapt "android.arch.lifecycle:compiler:1.1.1"
-    kapt "androidx.room:room-compiler:2.1.0-alpha04"
+
+
     //testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    def nav_version = "2.0.0-rc02"
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    // For Kotlin use navigation-fragment-ktx
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    // For Kotlin use navigation-ui-ktx
-    implementation Dependencies.androidViewPager
-    implementation Dependencies.lotttie
+
+
+
     implementation project(':service')
     implementation project(':core')
     implementation project(':repository')
     implementation project(':network')
-    implementation 'com.google.android.material:material:1.0.0'
     implementation project(':AtomSdk')
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
 }

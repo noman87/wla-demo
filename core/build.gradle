@@ -60,14 +60,10 @@ dependencies {
 
     // ViewModel and LiveData ANDROID
     api Dependencies.viewModelAndLiveData
-    //room
-    api Dependencies.room
 
 
 
     kapt "android.arch.lifecycle:compiler:1.1.1"
-    kapt "androidx.room:room-compiler:2.1.0-alpha04"
-
 
     //dagger
 
@@ -82,16 +78,12 @@ dependencies {
     api Dependencies.retrofit
     api Dependencies.moshi
     api Dependencies.coroutinesAdapte
+    api Dependencies.moshikotlin
 
+    api Dependencies.gson
+    api Dependencies.modelMapper
 
-    api 'com.google.code.gson:gson:2.8.5'
-
-    api 'com.squareup.retrofit2:converter-gson:2.3.0'
-    api "com.squareup.moshi:moshi-kotlin:1.8.0"
-
-    api 'org.modelmapper:modelmapper:2.3.0'
-
-    api "io.reactivex.rxjava2:rxjava:2.2.6"
+    api Dependencies.rxjava
 
 
 }
