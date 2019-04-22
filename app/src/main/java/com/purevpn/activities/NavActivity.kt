@@ -5,24 +5,25 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
-import com.purevpn.viewModels.NavViewModel
 import com.purevpn.R
+import com.purevpn.fragments.DestinationOneFragmentDirections
+import com.purevpn.viewModels.NavViewModel
 
 class NavActivity : AppCompatActivity() {
 
+    private lateinit var navController: NavController
     private lateinit var viewModel: NavViewModel
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
         viewModel = ViewModelProviders.of(this).get(NavViewModel::class.java)
+        navController = Navigation.findNavController(this, R.id.host_fragment)
 
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -31,9 +32,16 @@ class NavActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val navController = Navigation.findNavController(this, R.id.host_fragment)
+        val navigated = item?.let {
+            if (it.title == "Second destination") {
 
-        val navigated = NavigationUI.onNavDestinationSelected(item!!, navController)
-        return navigated || super.onOptionsItemSelected(item)
+                val directions =
+                    DestinationOneFragmentDirections.actionDestinationOneToDestinationTwo(5)
+                navController.navigate(directions)
+
+            }
+            //NavigationUI.onNavDestinationSelected(it, navController)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

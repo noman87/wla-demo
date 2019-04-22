@@ -13,16 +13,21 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Base.Theme.Light">
+        <activity android:name=".login.Login">
+
+        </activity>
         <activity android:name=".dashboard.DashboardActivity">
+        </activity>
+        <activity android:name=".activities.NavActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.NavActivity">
-        </activity>
         <activity android:name=".activities.MainActivity">
+
         </activity>
     </application>
 

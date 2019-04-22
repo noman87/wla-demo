@@ -9,8 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.purevpn.viewModels.NavViewModel
+import androidx.navigation.fragment.navArgs
 import com.purevpn.R
+import com.purevpn.viewModels.NavViewModel
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,12 +26,14 @@ private const val ARG_PARAM2 = "param2"
 class DestinationTwoFragment : Fragment() {
 
 
+    val args: DestinationTwoFragmentArgs by navArgs()
     private lateinit var viewModel: NavViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        Log.e("ID is", "" + args.id)
 
 
         viewModel = activity?.run {

@@ -9,23 +9,27 @@
         android:id="@+id/destination_one"
         android:name="com.purevpn.fragments.DestinationOneFragment"
         android:label="fragment_destination_one"
-        tools:layout="@layout/fragment_destination_one" />
+        tools:layout="@layout/fragment_destination_one" >
+        <action
+                android:id="@+id/action_destination_one_to_destination_two"
+                app:destination="@id/destination_two"/>
+    </fragment>
     <fragment
         android:id="@+id/destination_two"
         android:name="com.purevpn.fragments.DestinationTwoFragment"
         android:label="fragment_destination_two"
         tools:layout="@layout/fragment_destination_two" >
         <action
-            android:id="@+id/action_next"
-            app:destination="@id/destination_three" />
+                android:id="@+id/action_destination_two_to_destination_three"
+                app:destination="@id/destination_three"/>
+        <argument
+                android:name="id"
+                app:argType="integer"
+                android:defaultValue="1"/>
     </fragment>
     <fragment
         android:id="@+id/destination_three"
         android:name="com.purevpn.fragments.DestinationThreeFragment"
         android:label="fragment_destination_three"
-        tools:layout="@layout/fragment_destination_three" >
-        <action
-            android:id="@+id/action_next"
-            app:destination="@id/destination_one" />
-    </fragment>
+        tools:layout="@layout/fragment_destination_three" />
 </navigation>
