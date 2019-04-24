@@ -1,4 +1,4 @@
-package com.purevpn.fragments
+package com.purevpn.navigation
 
 
 import android.os.Bundle

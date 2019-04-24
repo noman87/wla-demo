@@ -1,4 +1,4 @@
-package com.purevpn.activities
+package com.purevpn.navigation
 
 import android.os.Bundle
 import android.view.Menu
@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.purevpn.R
-import com.purevpn.fragments.DestinationOneFragmentDirections
-import com.purevpn.viewModels.NavViewModel
 
 class NavActivity : AppCompatActivity() {
 

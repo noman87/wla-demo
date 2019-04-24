@@ -1,4 +1,4 @@
-package com.purevpn.fragments
+package com.purevpn.navigation
 
 
 import android.os.Bundle
@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.purevpn.R
-import com.purevpn.viewModels.NavViewModel
+
 
 
 // TODO: Rename parameter arguments, choose names that match

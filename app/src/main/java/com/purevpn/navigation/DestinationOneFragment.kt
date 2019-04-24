@@ -1,4 +1,4 @@
-package com.purevpn.fragments
+package com.purevpn.navigation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.purevpn.R
-import com.purevpn.viewModels.NavViewModel
 
 
 class DestinationOneFragment : Fragment() {

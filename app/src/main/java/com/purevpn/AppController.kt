@@ -26,9 +26,11 @@ import com.purevpn.service.location.CountryServiceImpl
 import com.purevpn.service.location.LocationServiceImpl
 import io.reactivex.subjects.PublishSubject
 import io.realm.Realm
+import okhttp3.OkHttpClient
 import org.koin.android.ext.android.startKoin
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 
 
 class AppController : Application(), VPNStateListener {
@@ -89,7 +91,7 @@ class AppController : Application(), VPNStateListener {
 
     fun registerCallbacks() {
         AtomManager.addVPNStateListener(this)
-     //   atomManager.bindIKEVStateService(this)
+        //   atomManager.bindIKEVStateService(this)
 
         Log.e("CurrentStatus", atomManager.getCurrentVpnStatus(this))
     }
@@ -108,19 +110,19 @@ class AppController : Application(), VPNStateListener {
 
     private val applicationMainModule = module {
 
-        single { RetrofitFactory.makeRetrofitService() }
+        single { makeRetrofitService() }
 
-        single<ILocationNetwork> { LocationNetworkImpl() }
+        factory<ILocationNetwork> { LocationNetworkImpl() }
 
-        single<ILocationService> { LocationServiceImpl() }
+        factory<ILocationService> { LocationServiceImpl() }
 
         single { WebRequestHelper() }
 
         single<IBaseNetwork> { BaseNetworkImpl() }
 
-        single<ILocationRepository> { LocationRepositoryImpl() }
+        factory<ILocationRepository> { LocationRepositoryImpl() }
 
-        single<IBaseRepository> { BaseRepositoryImpl() }
+        factory<IBaseRepository> { BaseRepositoryImpl() }
 
         single { atomManager }
 
@@ -164,13 +166,18 @@ class AppController : Application(), VPNStateListener {
         }
     }
 
-    object RetrofitFactory {
-        fun makeRetrofitService(): INetworkApi {
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .build().create(INetworkApi::class.java)
-        }
+    private fun makeRetrofitService(): INetworkApi {
+        val okHttpClient = OkHttpClient().newBuilder()
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .cache(null)
+            .build()
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .client(okHttpClient)
+            .build().create(INetworkApi::class.java)
     }
 
 }
