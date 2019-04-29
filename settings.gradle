@@ -1,1 +1,1 @@
-include ':app', ':network', ':repository', ':core', ':service', ':AtomSdk'
+include ':app', ':network', ':repository', ':core', ':service', ':AtomSdk', ':diLayer'

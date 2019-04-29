@@ -11,19 +11,9 @@ import com.atom.sdk.android.exceptions.AtomException
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.purevpn.core.enums.ConnectionState
 import com.purevpn.core.helper.ApiUrls.BASE_URL
-import com.purevpn.core.helper.WebRequestHelper
-import com.purevpn.core.iNetwork.IBaseNetwork
-import com.purevpn.core.iNetwork.ILocationNetwork
 import com.purevpn.core.iNetwork.INetworkApi
-import com.purevpn.core.iRepository.IBaseRepository
-import com.purevpn.core.iRepository.ICountryRepository
-import com.purevpn.core.iRepository.ILocationRepository
-import com.purevpn.core.iService.ICountryService
-import com.purevpn.core.iService.ILocationService
-import com.purevpn.network.BaseNetworkImpl
-import com.purevpn.network.LocationNetworkImpl
-import com.purevpn.service.location.CountryServiceImpl
-import com.purevpn.service.location.LocationServiceImpl
+import com.purevpn.dilayer.DiResolver
+import io.reactivex.schedulers.Schedulers.single
 import io.reactivex.subjects.PublishSubject
 import io.realm.Realm
 import okhttp3.OkHttpClient
@@ -110,24 +100,24 @@ class AppController : Application(), VPNStateListener {
 
     private val applicationMainModule = module {
 
-        single { makeRetrofitService() }
+        single { DiResolver().makeRetrofit() }
 
-        factory<ILocationNetwork> { LocationNetworkImpl() }
+        factory { DiResolver().makeLocationNetwork() }
 
-        factory<ILocationService> { LocationServiceImpl() }
+        factory { DiResolver().makeLocationNetworkService() }
 
-        single { WebRequestHelper() }
+        single { DiResolver().webRequestHelper() }
 
-        single<IBaseNetwork> { BaseNetworkImpl() }
+        single { DiResolver().makeBaseNetwork() }
 
-        factory<ILocationRepository> { LocationRepositoryImpl() }
+        factory { DiResolver().makeLocationRepository() }
 
-        factory<IBaseRepository> { BaseRepositoryImpl() }
+        factory { DiResolver().makeBaseRepository() }
 
         single { atomManager }
 
-        factory<ICountryRepository> { CountryRepositoryImpl() }
-        factory<ICountryService> { CountryServiceImpl() }
+        factory { DiResolver().makeCountryRepo() }
+        factory { DiResolver().makeCountryService() }
 
 
     }
@@ -147,6 +137,7 @@ class AppController : Application(), VPNStateListener {
 
     override fun onCreate() {
         super.onCreate()
+
         Realm.init(this)
         startKoin(this, listOf(applicationMainModule))
         initAtomSdk()
@@ -156,6 +147,7 @@ class AppController : Application(), VPNStateListener {
 
 
     private fun initAtomSdk() {
+        //DiTesting().test()
         val build = AtomConfiguration.Builder(getString(R.string.atom_secret_key)).build()
         build?.run {
             AtomManager.initialize(this@AppController, this) {
