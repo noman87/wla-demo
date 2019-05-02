@@ -1,13 +1,12 @@
-apply plugin: 'kotlin-kapt'
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
+
 apply plugin: 'realm-android'
+
 
 apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.noman87'
