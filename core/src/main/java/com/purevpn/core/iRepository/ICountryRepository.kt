@@ -5,7 +5,7 @@ import com.purevpn.core.models.Result
 
 interface ICountryRepository {
 
-    suspend fun getAllCountries():List<CountryModel>?
+    suspend fun getAllCountries(): Result<List<CountryModel>>
 
-    suspend fun insertAllCountries(list: List<CountryModel>):Result<Boolean>
+    suspend fun insertAllCountries(list: List<CountryModel>): Result<Boolean>
 }

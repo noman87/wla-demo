@@ -11,6 +11,7 @@ import com.purevpn.core.helper.IResponse
 import com.purevpn.core.iRepository.ICountryRepository
 import com.purevpn.core.iService.ICountryService
 import com.purevpn.core.models.CountryModel
+import com.purevpn.core.models.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,37 +33,41 @@ class CountryServiceImpl : ICountryService, KoinComponent {
 
     override suspend fun getAllCountries(response: IResponse<List<CountryModel>>) {
         val allCountries = countryRepo.getAllCountries()
-        if (allCountries != null && allCountries.isNotEmpty()) {
-            response.success(allCountries)
-        } else {
-            atomManager.getCountries(object : CollectionCallback<Country> {
-                override fun onSuccess(countryList: MutableList<Country>?) {
-                    val listType = object : TypeToken<MutableList<CountryModel>>() {}.type
-                    val map = ModelMapper().map<MutableList<CountryModel>>(countryList, listType)
-                    map?.run {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            for (i in 1..100) {
-                                insertAllCountries(this@run)
+        when (allCountries) {
+            is Result.Success -> {
+                response.success(allCountries.data)
+            }
+            is Result.Error -> {
+                atomManager.getCountries(object : CollectionCallback<Country> {
+                    override fun onSuccess(countryList: MutableList<Country>?) {
+                        val listType = object : TypeToken<MutableList<CountryModel>>() {}.type
+                        val map = ModelMapper().map<MutableList<CountryModel>>(countryList, listType)
+                        map?.run {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                for (i in 1..100) {
+                                    insertAllCountries(this@run)
+                                }
                             }
+
+                            response.success(this)
                         }
 
-                        response.success(this)
                     }
 
-                }
+                    override fun onNetworkError(atomException: AtomException?) {
+                        Log.e("Error", atomException.toString())
 
-                override fun onNetworkError(atomException: AtomException?) {
-                    Log.e("Error", atomException.toString())
+                    }
 
-                }
-
-                override fun onError(atomException: AtomException?) {
-                    Log.e("Error", atomException.toString())
+                    override fun onError(atomException: AtomException?) {
+                        Log.e("Error", atomException.toString())
 
 
-                }
+                    }
 
-            })
+                })
+
+            }
         }
 
     }

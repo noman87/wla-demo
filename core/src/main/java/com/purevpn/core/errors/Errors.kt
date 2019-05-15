@@ -35,11 +35,50 @@ class Errors {
             val _3002 = 3002
             val _3003 = 3003
             val _3004 = 3004
+            val _3005 = 3005
+            val _3006 = 3006
+            val _3007 = 3007
+            val _3008 = 3008
         }
     }
 
 
     companion object {
+
+        fun getRepoErrorMessage(errorCode: @AppErrorCodes Int): String {
+            return when (errorCode) {
+                RepoErrorCodes._3001 -> {
+                    "Realm object conversion fail"
+
+                }
+                RepoErrorCodes._3002 -> {
+                    "Insertion fail"
+                }
+                RepoErrorCodes._3003 -> {
+                    "List of insertion fail"
+                }
+                RepoErrorCodes._3004 -> {
+                    "creation of query fail"
+                }
+                RepoErrorCodes._3005 -> {
+                    "creation of query fail"
+                }
+                RepoErrorCodes._3006 -> {
+                    "getting error while finding list of data"
+                }
+                RepoErrorCodes._3007 -> {
+                    "getting error while finding data"
+                }
+                RepoErrorCodes._3008 -> {
+                    "No data found"
+                }
+                else -> {
+                    "General Error"
+                }
+            }
+
+        }
+
         fun getApiErrorMessage(errorCode: @ApiErrorCodes Int): String {
             return when (errorCode) {
                 ApiErrorCodes._1001 -> {
@@ -85,26 +124,6 @@ class Errors {
 
         }
 
-        fun getRepoErrorMessage(errorCode: @AppErrorCodes Int): String {
-            return when (errorCode) {
-                RepoErrorCodes._3001 -> {
-                    "Realm object conversion fail"
 
-                }
-                RepoErrorCodes._3002 -> {
-                    "Insertion fail"
-                }
-                RepoErrorCodes._3003 -> {
-                    "List of insertion fail"
-                }
-                RepoErrorCodes._3004 -> {
-                    ""
-                }
-                else -> {
-                    "General Error"
-                }
-            }
-
-        }
     }
 }

@@ -115,7 +115,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
 
         } else {
 
-
+            getUserLocation()
         }
     }
 

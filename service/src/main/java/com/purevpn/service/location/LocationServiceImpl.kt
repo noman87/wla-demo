@@ -75,6 +75,15 @@ class LocationServiceImpl :
         val locationModel =
             locationRepository.findAllLocationsByCountry("Pakistan")
 
+        when (locationModel) {
+            is Result.Success -> {
+
+            }
+            is Result.Error -> {
+
+            }
+        }
+
         val locationModelOtherThanPak =
             locationRepository.findAllLocationByIsoCodeAndIpAddress("US", "10.10.10.10")
 

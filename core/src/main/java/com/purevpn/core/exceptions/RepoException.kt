@@ -5,7 +5,7 @@ import com.purevpn.core.errors.Errors
 class RepoException(var errorCode: Int, var exception: Exception?) : Exception() {
 
     override val message: String?
-        get() = Errors.getApiErrorMessage(errorCode)
+        get() = Errors.getRepoErrorMessage(errorCode)
 
 
 }

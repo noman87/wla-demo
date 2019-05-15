@@ -7,12 +7,14 @@ interface ILocationRepository {
 
 
     suspend fun insertLocation(location: LocationModel): Result<Boolean>
-    suspend fun findAllLocationsByCountry(countryName: String): List<LocationModel>?
-    suspend fun findAllLocations(): List<LocationModel>?
 
-    suspend fun findSingleLocationByCountryName(countryName:  String):LocationModel?
+    suspend fun findAllLocationsByCountry(countryName: String): Result<List<LocationModel>>
 
-    suspend fun findAllLocationByIsoCodeAndIpAddress(isoCode: String, ipAddress: String): List<LocationModel>?
+    suspend fun findAllLocations(): Result<List<LocationModel>>
+
+    suspend fun findSingleLocationByCountryName(countryName: String): Result<LocationModel>
+
+    suspend fun findAllLocationByIsoCodeAndIpAddress(isoCode: String, ipAddress: String): Result<List<LocationModel>>
 
 
 }
