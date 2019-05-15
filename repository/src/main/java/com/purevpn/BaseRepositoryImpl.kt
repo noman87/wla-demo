@@ -1,7 +1,10 @@
 package com.purevpn
 
 import com.purevpn.core.enums.DatabaseOperations
+import com.purevpn.core.errors.Errors
+import com.purevpn.core.exceptions.ApiException
 import com.purevpn.core.iRepository.IBaseRepository
+import com.purevpn.core.models.Result
 import com.purevpn.models.QueryModel
 import io.realm.Realm
 import io.realm.RealmModel
@@ -13,30 +16,58 @@ import java.lang.reflect.Type
 
 
 open class BaseRepositoryImpl : IBaseRepository, KoinComponent {
-
-
     lateinit var realm: Realm
-
-    fun <T : RealmObject> insert(any: Any, classOfT: Class<T>): Boolean {
+    fun <T : RealmObject> insert(any: Any, classOfT: Class<T>): Result<Boolean> {
         val database = getDatabase()
-        database.beginTransaction()
-        val realmObject = ModelMapper().map<RealmObject>(any, classOfT)
-        val copyToRealmOrUpdate = database.copyToRealmOrUpdate(realmObject)
-        database.commitTransaction()
-        return copyToRealmOrUpdate.isValid
+        val realmObject = convertToRealmObject(any, classOfT)
+        when (realmObject) {
+            is Result.Success -> {
+                try {
+                    database.apply {
+                        beginTransaction()
+                        insertOrUpdate(realmObject.data)
+                        commitTransaction()
+                        return Result.Success(true)
+                    }
+
+                } catch (e: Exception) {
+                    return Result.Error(ApiException(Errors.RepoErrorCodes._3002, e))
+                }
+
+            }
+            is Result.Error -> {
+                return Result.Error(realmObject.exception)
+            }
+        }
+
     }
 
-    fun insertAll(any: Any, type: Type): Boolean {
-        val database = getDatabase()
-        database.beginTransaction()
-        val realmObject = ModelMapper().map<ArrayList<RealmObject>>(any, type)
-        val copyToRealmOrUpdate = database.copyToRealmOrUpdate(realmObject)
-        database.commitTransaction()
-        copyToRealmOrUpdate?.apply {
-            if (!this.isEmpty())
-                return copyToRealmOrUpdate[0].isValid
+    private fun <T : RealmObject> convertToRealmObject(any: Any, classOfT: Class<T>): Result<RealmObject> {
+        return try {
+            Result.Success(ModelMapper().map<RealmObject>(any, classOfT))
+        } catch (e: Exception) {
+            return Result.Error(ApiException(Errors.RepoErrorCodes._3001, e))
         }
-        return false
+    }
+
+    fun insertAll(any: Any, type: Type): Result<Boolean> {
+        val database = getDatabase()
+        try {
+            val realmObject = ModelMapper().map<ArrayList<RealmObject>>(any, type)
+            try {
+                database.apply {
+                    beginTransaction()
+                    insertOrUpdate(realmObject)
+                    commitTransaction()
+                    return Result.Success(true)
+                }
+            } catch (e: Exception) {
+                return Result.Error(ApiException(Errors.RepoErrorCodes._3003, e))
+            }
+
+        } catch (e: Exception) {
+            return Result.Error(ApiException(Errors.RepoErrorCodes._3001, e))
+        }
 
     }
 

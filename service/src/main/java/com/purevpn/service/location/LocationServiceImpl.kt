@@ -1,5 +1,6 @@
 package com.purevpn.service.location
 
+import android.util.Log
 import com.purevpn.core.errors.Errors
 import com.purevpn.core.exceptions.ApiException
 import com.purevpn.core.exceptions.AppException
@@ -27,7 +28,7 @@ class LocationServiceImpl :
                 return when (code) {
                     locationNetwork.apiSuccessCode -> {
                         //insertion and querying
-                        insetAndQuery(this)
+                        insertQuery(this)
                         Result.Success(this)
                     }
                     else -> {
@@ -56,13 +57,27 @@ class LocationServiceImpl :
         }
     }
 
-    private suspend fun insetAndQuery(locationModel: LocationModel) {
+    private suspend fun insertQuery(locationModel: LocationModel) {
         var id = UUID.randomUUID().mostSignificantBits.toInt()
-        val isSuccess = locationRepository.insertLocation(locationModel)
+        val insert = locationRepository.insertLocation(locationModel)
+        when (insert) {
+            is Result.Success -> {
+                Log.d("success", insert.data.toString())
+
+            }
+            is Result.Error -> {
+
+                Log.d("message", insert.exception.message)
+
+            }
+        }
+
         val locationModel =
             locationRepository.findAllLocationsByCountry("Pakistan")
+
         val locationModelOtherThanPak =
             locationRepository.findAllLocationByIsoCodeAndIpAddress("US", "10.10.10.10")
+
         val findSingleLocationByCountryName =
             locationRepository.findSingleLocationByCountryName("Pakistan")
     }

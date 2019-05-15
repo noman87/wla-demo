@@ -4,13 +4,14 @@ import com.google.gson.reflect.TypeToken
 import com.purevpn.core.enums.DatabaseOperations
 import com.purevpn.core.iRepository.ILocationRepository
 import com.purevpn.core.models.LocationModel
+import com.purevpn.core.models.Result
 import com.purevpn.models.LocationRepoModel
 import com.purevpn.models.QueryDataModel
 import com.purevpn.models.QueryModel
 
 class LocationRepositoryImpl : BaseRepositoryImpl(), ILocationRepository {
 
-    override suspend fun insertLocation(location: LocationModel): Boolean {
+    override suspend fun insertLocation(location: LocationModel): Result<Boolean> {
         return insert(location, LocationRepoModel::class.java)
     }
 
@@ -27,7 +28,10 @@ class LocationRepositoryImpl : BaseRepositoryImpl(), ILocationRepository {
         return findAll(queryModel, listType)
     }
 
-    override suspend fun findAllLocationByIsoCodeAndIpAddress(isoCode: String, ipAddress: String): List<LocationModel>? {
+    override suspend fun findAllLocationByIsoCodeAndIpAddress(
+        isoCode: String,
+        ipAddress: String
+    ): List<LocationModel>? {
         val databaseOperations = DatabaseOperations()
         databaseOperations.selectOperations = DatabaseOperations.SelectOperations.EQUAL_TO
         val databaseOperationsSecond = DatabaseOperations()
@@ -55,7 +59,7 @@ class LocationRepositoryImpl : BaseRepositoryImpl(), ILocationRepository {
     override suspend fun findSingleLocationByCountryName(countryName: String): LocationModel? {
         val queryDataModel = QueryDataModel(LocationRepoModel::country.name, null, countryName)
         val queryModel = QueryModel(LocationRepoModel::class.java, listOf(queryDataModel))
-        return find(queryModel,LocationModel::class.java)
+        return find(queryModel, LocationModel::class.java)
 
     }
 

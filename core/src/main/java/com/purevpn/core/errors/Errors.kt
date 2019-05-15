@@ -27,6 +27,18 @@ class Errors {
     }
 
 
+    @Target(AnnotationTarget.TYPE)
+    @Retention(AnnotationRetention.SOURCE)
+    annotation class RepoErrorCodes {
+        companion object {
+            val _3001 = 3001
+            val _3002 = 3002
+            val _3003 = 3003
+            val _3004 = 3004
+        }
+    }
+
+
     companion object {
         fun getApiErrorMessage(errorCode: @ApiErrorCodes Int): String {
             return when (errorCode) {
@@ -65,6 +77,28 @@ class Errors {
                 }
                 AppErrorCodes._2004 -> {
                     "API error"
+                }
+                else -> {
+                    "General Error"
+                }
+            }
+
+        }
+
+        fun getRepoErrorMessage(errorCode: @AppErrorCodes Int): String {
+            return when (errorCode) {
+                RepoErrorCodes._3001 -> {
+                    "Realm object conversion fail"
+
+                }
+                RepoErrorCodes._3002 -> {
+                    "Insertion fail"
+                }
+                RepoErrorCodes._3003 -> {
+                    "List of insertion fail"
+                }
+                RepoErrorCodes._3004 -> {
+                    ""
                 }
                 else -> {
                     "General Error"

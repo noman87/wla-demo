@@ -40,37 +40,22 @@ dependencies {
 
     api Dependencies.androidxCore
     api Dependencies.appcompat
-    api Dependencies.constraintLayout
-
-
-
-
-    api Dependencies.coroutiensCore
     api Dependencies.kotlin
 
 
-    //koin Core
-    api Dependencies.koinCore
 
-    // or Koin for Lifecycle scoping
+    api Dependencies.koinCore
     api Dependencies.koinScope
-    // or Koin for Android Architecture ViewModel
     api Dependencies.koinViewModel
 
     //coroutines
     api Dependencies.coroutiensCore
     api Dependencies.coroutiensAndroid
 
+
     // ViewModel and LiveData ANDROID
     api Dependencies.viewModelAndLiveData
-
-
-
     kapt "android.arch.lifecycle:compiler:1.1.1"
-
-    //dagger
-
-
 
 
     //testing
